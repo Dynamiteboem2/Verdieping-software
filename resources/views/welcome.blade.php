@@ -25,7 +25,7 @@
                 </nav>
             </div>
         </header>
-
+ 
         <main class="relative">
             <!-- Hero Section -->
             <div class="relative h-[93vh] bg-cover bg-center" style="background-image: url('/images/windsurf.png');">
