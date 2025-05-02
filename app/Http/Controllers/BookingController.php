@@ -29,15 +29,17 @@ class BookingController extends Controller
         $validated = $request->validate([
             'lesson_id' => 'required|exists:lessons,id',
             'instructor_id' => 'required|exists:instructors,id',
-            'date' => 'required|date',
+            'date' => 'required|date_format:d/m/Y',
             'time' => 'required',
         ]);
 
-        // Save the booking (you can create a bookings table if needed)
+        // Convert the date to the correct format for MySQL (YYYY-MM-DD)
+        $formattedDate = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
+
         DB::table('bookings')->insert([
             'lesson_id' => $validated['lesson_id'],
             'instructor_id' => $validated['instructor_id'],
-            'date' => $validated['date'],
+            'date' => $formattedDate,
             'time' => $validated['time'],
             'created_at' => now(),
             'updated_at' => now(),
