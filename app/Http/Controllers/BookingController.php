@@ -6,17 +6,22 @@ use App\Models\Instructor;
 use App\Models\Lesson;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
     public function create()
     {
-        $lessons = Lesson::all();
-        $instructors = Instructor::all();
-        $locations = Location::all();
+        $lessons = Lesson::all(); // Ensure this fetches data from the database
+        return view('booking.index', compact('lessons'));
+    }
 
+    public function createBooking($lessonId)
+    {
+        $lesson = Lesson::findOrFail($lessonId); // Fetch the lesson details
+        $instructors = Instructor::all(); // Fetch all instructors
 
-        return view('booking.index', compact('lessons', 'instructors', 'locations'));
+        return view('booking.create', compact('lesson', 'instructors'));
     }
 
     public function store(Request $request)
@@ -24,10 +29,20 @@ class BookingController extends Controller
         $validated = $request->validate([
             'lesson_id' => 'required|exists:lessons,id',
             'instructor_id' => 'required|exists:instructors,id',
-            'location_id' => 'required|exists:locations,id',
+            'date' => 'required|date',
+            'time' => 'required',
         ]);
 
         // Save the booking (you can create a bookings table if needed)
+        DB::table('bookings')->insert([
+            'lesson_id' => $validated['lesson_id'],
+            'instructor_id' => $validated['instructor_id'],
+            'date' => $validated['date'],
+            'time' => $validated['time'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return redirect()->route('book.lesson')->with('success', 'Lesson booked successfully!');
     }
 }
