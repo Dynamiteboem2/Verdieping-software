@@ -14,18 +14,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-white text-gray-800">
-        <header class="bg-white shadow">
-            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <h1 class="text-2xl font-bold">WINDSURF</h1>
-                <nav class="space-x-4">
-                    <a href="#home" class="text-gray-600 hover:text-gray-900">Home</a>
-                    <a href="#about" class="text-gray-600 hover:text-gray-900">About</a>
-                    <a href="#contact" class="text-gray-600 hover:text-gray-900">Contact</a>
-                    <a href="{{ route('login') }}" class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Log in</a>
-                </nav>
-            </div>
-        </header>
- 
+        <x-navbar /> <!-- Use the navbar component -->
+
         <main class="relative">
             <!-- Hero Section -->
             <div class="relative h-[93vh] bg-cover bg-center" style="background-image: url('/images/windsurf.png');">
@@ -35,7 +25,7 @@
                     <p class="mt-4 text-lg lg:text-xl">
                         Join our windsurfing lessons and learn the art of windsurfing from our experienced instructors.
                     </p>
-                    <a href="#lessons" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lx rounded w-fit">
+                    <a href="{{ route('book.lesson') }}" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-lx rounded w-fit">
                         Schedule a Lesson
                     </a>
                 </div>
