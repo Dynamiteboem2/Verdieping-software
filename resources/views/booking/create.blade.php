@@ -28,50 +28,52 @@
             @csrf
 
             <!-- Booking Form -->
-            <div class="flex-[2] bg-white p-6 rounded shadow relative">
-                <h2 class="text-xl font-bold mb-4">Lesson Details</h2>
-                <p class="text-gray-700 mb-2">Lesson: {{ $lesson->type }}</p>
-                <p class="text-gray-700 mb-2">Duration: {{ $lesson->duration }}</p>
-                <p class="text-gray-700 mb-4">Price: €{{ number_format($lesson->price, 2) }}</p>
+            <div class="flex-[2] bg-white p-6 rounded shadow relative flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl font-bold mb-4">Lesson Details</h2>
+                    <p class="text-gray-700 mb-2">Lesson: {{ $lesson->type }}</p>
+                    <p class="text-gray-700 mb-2">Duration: {{ $lesson->duration }}</p>
+                    <p class="text-gray-700 mb-4">Price: €{{ number_format($lesson->price, 2) }}</p>
 
-                <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-                <input type="hidden" name="price" value="{{ $lesson->price }}">
+                    <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                    <input type="hidden" name="price" value="{{ $lesson->price }}">
 
-                <!-- Select Date -->
-                <div class="mb-4">
-                    <label for="date" class="block text-sm font-medium">Select Date</label>
-                    <input type="text" name="date" id="date" class="w-full border-gray-300 rounded mt-1 @error('date') border-red-500 @enderror" placeholder="DD/MM/YYYY" value="{{ old('date') }}" required>
-                    @error('date')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                    <!-- Select Date -->
+                    <div class="mb-4">
+                        <label for="date" class="block text-sm font-medium">Select Date</label>
+                        <input type="text" name="date" id="date" class="w-full border-gray-300 rounded mt-1 @error('date') border-red-500 @enderror" placeholder="DD/MM/YYYY" value="{{ old('date') }}" required>
+                        @error('date')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                <!-- Select Time -->
-                <div class="mb-4">
-                    <label for="time" class="block text-sm font-medium">Select Time</label>
-                    <input type="time" name="time" id="time" class="w-full border-gray-300 rounded mt-1 @error('time') border-red-500 @enderror" value="{{ old('time') }}" required>
-                    @error('time')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                    <!-- Select Time -->
+                    <div class="mb-4">
+                        <label for="time" class="block text-sm font-medium">Select Time</label>
+                        <input type="time" name="time" id="time" class="w-full border-gray-300 rounded mt-1 @error('time') border-red-500 @enderror" value="{{ old('time') }}" required>
+                        @error('time')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                <!-- Select Instructor -->
-                <div class="mb-4">
-                    <label for="instructor_id" class="block text-sm font-medium">Select Instructor</label>
-                    <select name="instructor_id" id="instructor_id" class="w-full border-gray-300 rounded mt-1 @error('instructor_id') border-red-500 @enderror" required>
-                        @foreach ($instructors as $instructor)
-                            <option value="{{ $instructor->id }}" {{ old('instructor_id') == $instructor->id ? 'selected' : '' }}>
-                                {{ $instructor->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('instructor_id')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
+                    <!-- Select Instructor -->
+                    <div class="mb-4">
+                        <label for="instructor_id" class="block text-sm font-medium">Select Instructor</label>
+                        <select name="instructor_id" id="instructor_id" class="w-full border-gray-300 rounded mt-1 @error('instructor_id') border-red-500 @enderror" required>
+                            @foreach ($instructors as $instructor)
+                                <option value="{{ $instructor->id }}" {{ old('instructor_id') == $instructor->id ? 'selected' : '' }}>
+                                    {{ $instructor->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('instructor_id')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Submit Button -->
-                <div class="absolute bottom-6 left-6">
+                <div class="mt-6">
                     <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Buy
                     </button>
