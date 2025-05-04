@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instructor;
 use App\Models\Lesson;
 use App\Models\Location;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,18 +32,23 @@ class BookingController extends Controller
             'instructor_id' => 'required|exists:instructors,id',
             'date' => 'required|date_format:d/m/Y',
             'time' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone_number' => 'required|string|max:15',
         ]);
 
         // Convert the date to the correct format for MySQL (YYYY-MM-DD)
         $formattedDate = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
 
-        DB::table('bookings')->insert([
+        // Create the booking using Eloquent
+        Booking::create([
             'lesson_id' => $validated['lesson_id'],
             'instructor_id' => $validated['instructor_id'],
             'date' => $formattedDate,
             'time' => $validated['time'],
-            'created_at' => now(),
-            'updated_at' => now(),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone_number' => $validated['phone_number'],
         ]);
 
         return redirect()->route('book.lesson')->with('success', 'Lesson booked successfully!');

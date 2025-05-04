@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
             $table->date('date');
             $table->time('time');
+            $table->string('name'); // Add name field
+            $table->string('email'); // Add email field
+            $table->string('phone_number'); // Add phone number field
             $table->timestamps();
         });
     }
