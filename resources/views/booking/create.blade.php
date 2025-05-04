@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Your Booking</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
     <!-- Include the navbar component -->
@@ -41,7 +46,7 @@
                     <!-- Select Date -->
                     <div class="mb-4">
                         <label for="date" class="block text-sm font-medium">Select Date</label>
-                        <input type="text" name="date" id="date" class="w-full border-gray-300 rounded mt-1 @error('date') border-red-500 @enderror" placeholder="DD/MM/YYYY" value="{{ old('date') }}" required>
+                        <input type="text" name="date" id="date" class="w-full border-gray-300 rounded mt-1 @error('date') border-red-500 @enderror" placeholder="Select a date" value="{{ old('date') }}" required>
                         @error('date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -118,6 +123,14 @@
             } else if (value.length > 4) {
                 e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#date", {
+                dateFormat: "d/m/Y", // Format the date as DD/MM/YYYY
+                minDate: "today",    // Disable past dates
+            });
         });
     </script>
 </body>

@@ -59,3 +59,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## flatpickr
+
+We use Flatpickr to provide an elegant and user-friendly date selection experience. It simplifies the process of picking dates by offering a lightweight, customizable, and feature-rich date picker. This ensures consistency and improves usability across the application.
