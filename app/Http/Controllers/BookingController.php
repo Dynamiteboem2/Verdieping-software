@@ -44,7 +44,7 @@ class BookingController extends Controller
         $userId = auth()->check() ? auth()->id() : null;
 
         // Create the booking using Eloquent
-        Booking::create([
+        $booking = Booking::create([
             'lesson_id' => $validated['lesson_id'],
             'instructor_id' => $validated['instructor_id'],
             'user_id' => $userId, // Assign the user_id
@@ -55,6 +55,13 @@ class BookingController extends Controller
             'phone_number' => $validated['phone_number'],
         ]);
 
-        return redirect()->route('book.lesson')->with('success', 'Lesson booked successfully!');
+        // Redirect to the booking details page
+        return redirect()->route('booking.show', $booking->id);
+    }
+
+    public function show($id)
+    {
+        $booking = Booking::with(['lesson', 'instructor'])->findOrFail($id);
+        return view('booking.show', compact('booking'));
     }
 }
