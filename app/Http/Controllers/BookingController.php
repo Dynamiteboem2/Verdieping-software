@@ -40,10 +40,14 @@ class BookingController extends Controller
         // Convert the date to the correct format for MySQL (YYYY-MM-DD)
         $formattedDate = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
 
+        // Determine the user_id
+        $userId = auth()->check() ? auth()->id() : null;
+
         // Create the booking using Eloquent
         Booking::create([
             'lesson_id' => $validated['lesson_id'],
             'instructor_id' => $validated['instructor_id'],
+            'user_id' => $userId, // Assign the user_id
             'date' => $formattedDate,
             'time' => $validated['time'],
             'name' => $validated['name'],
