@@ -18,8 +18,11 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'role_id' => 1, 
+            'password' => bcrypt('1'), 
         ]);
         $this->call([
+            RolesTableSeeder::class,
             InstructorsTableSeeder::class,
             LocationsTableSeeder::class,
             LessonsTableSeeder::class,
