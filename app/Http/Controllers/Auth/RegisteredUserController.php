@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\ActivationMail;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -32,26 +33,29 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        Log::info('RegisterController@store called');
+
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'activation_token' => Str::random(64),
             'is_active' => false,
+            'activation_token' => Str::random(64),
+            'role_id' => 3, // Set customer role
         ]);
 
-        event(new Registered($user));
+        Log::info('User created: ' . $user->email);
 
-        Auth::login($user);
+        try {
+            Log::info('Attempting to send activation email to: ' . $user->email);
+            Mail::to($user->email)->send(new ActivationMail($user));
+            Log::info('Activation email sent to: ' . $user->email);
+        } catch (\Exception $e) {
+            Log::error('Failed to send activation email: ' . $e->getMessage());
+        }
 
-        Mail::to($user->email)->send(new ActivationMail($user));
-
-        return view('auth.check-email');
+        return redirect()->route('check-email');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Auth\ActivationController;
 use App\Http\Controllers\Auth\SetPasswordController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,9 +27,13 @@ Route::post('/book-lesson', [BookingController::class, 'store'])->name('book.les
 Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 Route::get('/activate/{token}', [ActivationController::class, 'activate'])->name('activate');
 Route::post('/activate/{token}', [SetPasswordController::class, 'setPassword'])->name('activate.setpassword');
+
+Route::get('/check-email', function () {
+    return view('auth.check-email');
+})->name('check-email');
 
 require __DIR__.'/auth.php';
