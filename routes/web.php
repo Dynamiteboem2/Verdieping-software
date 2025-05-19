@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Auth\ActivationController;
+use App\Http\Controllers\Auth\SetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,5 +24,11 @@ Route::get('/book-lesson', [BookingController::class, 'create'])->name('book.les
 Route::get('/book-lesson/{lessonId}', [BookingController::class, 'createBooking'])->name('book.lesson.create');
 Route::post('/book-lesson', [BookingController::class, 'store'])->name('book.lesson.store');
 Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get('/activate/{token}', [ActivationController::class, 'activate'])->name('activate');
+Route::post('/activate/{token}', [SetPasswordController::class, 'setPassword'])->name('activate.setpassword');
 
 require __DIR__.'/auth.php';
