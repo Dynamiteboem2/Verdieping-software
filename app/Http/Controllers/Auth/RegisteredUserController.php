@@ -46,7 +46,10 @@ class RegisteredUserController extends Controller
             'role_id' => 3, // Set customer role
         ]);
 
+        $user->refresh();
+
         Log::info('User created: ' . $user->email);
+        Log::info('User activation_token: ' . $user->activation_token); // Add this line
 
         try {
             Log::info('Attempting to send activation email to: ' . $user->email);

@@ -21,6 +21,7 @@ class ActivationMail extends Mailable
     public function build()
     {
         return $this->subject('Activeer je account')
-            ->view('emails.activation');
+            ->view('emails.activation')
+            ->with(['user' => $this->user]);
     }
 }
