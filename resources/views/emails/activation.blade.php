@@ -1,4 +1,3 @@
-{{-- filepath: resources/views/emails/activation.blade.php --}}
 <!DOCTYPE html>
 <html>
 <head>
