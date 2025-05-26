@@ -27,7 +27,7 @@
                     <p class="text-gray-700"><strong>Price:</strong> €{{ number_format($booking->lesson->price, 2) }}</p>
                     <p class="text-gray-700"><strong>Date:</strong> {{ \Carbon\Carbon::parse($booking->date)->format('d/m/Y') }}</p>
                     <p class="text-gray-700"><strong>Time:</strong> {{ $booking->time }}</p>
-                    <p class="text-gray-700"><strong>Instructor:</strong> {{ $booking->instructor->name }}</p>
+                    <p class="text-gray-700"><strong>Instructor:</strong> {{ $booking->instructor->name ?? '-' }}</p>
                 </div>
             </div>
 

@@ -65,10 +65,9 @@
                     <div class="mb-4">
                         <label for="instructor_id" class="block text-sm font-medium">Select Instructor</label>
                         <select name="instructor_id" id="instructor_id" class="w-full border-gray-300 rounded mt-1 @error('instructor_id') border-red-500 @enderror" required>
-                            @foreach ($instructors as $instructor)
-                                <option value="{{ $instructor->id }}" {{ old('instructor_id') == $instructor->id ? 'selected' : '' }}>
-                                    {{ $instructor->name }}
-                                </option>
+                            <option value="">Kies een instructeur</option>
+                            @foreach($instructors as $instructor)
+                                <option value="{{ $instructor->id }}">{{ $instructor->name }}</option>
                             @endforeach
                         </select>
                         @error('instructor_id')

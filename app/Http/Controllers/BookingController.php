@@ -6,6 +6,7 @@ use App\Models\Instructor;
 use App\Models\Lesson;
 use App\Models\Location;
 use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,9 @@ class BookingController extends Controller
     public function createBooking($lessonId)
     {
         $lesson = Lesson::findOrFail($lessonId); // Fetch the lesson details
-        $instructors = Instructor::all(); // Fetch all instructors
+
+        // Get all instructors (users with role_id = 2)
+        $instructors = User::where('role_id', 2)->get();
 
         return view('booking.create', compact('lesson', 'instructors'));
     }
@@ -29,7 +32,7 @@ class BookingController extends Controller
     {
         $validated = $request->validate([
             'lesson_id' => 'required|exists:lessons,id',
-            'instructor_id' => 'required|exists:instructors,id',
+            'instructor_id' => 'required|exists:users,id', // <-- FIXED LINE
             'date' => 'required|date_format:d/m/Y',
             'time' => 'required',
             'name' => 'required|string|max:255',
@@ -62,6 +65,7 @@ class BookingController extends Controller
     public function show($id)
     {
         $booking = Booking::with(['lesson', 'instructor'])->findOrFail($id);
+
         return view('booking.show', compact('booking'));
     }
 }

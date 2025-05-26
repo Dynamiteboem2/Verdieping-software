@@ -28,6 +28,10 @@ class Booking extends Model
 
     public function instructor()
     {
-        return $this->belongsTo(Instructor::class);
+        return $this->belongsTo(\App\Models\User::class, 'instructor_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 }

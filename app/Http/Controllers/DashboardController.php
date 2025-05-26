@@ -9,24 +9,38 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
+        $isInstructor = $user->role_id == 2; // Adjust as needed
 
-        $upcomingLessons = $user->bookings()
-            ->whereDate('date', '>=', now()->toDateString())
-            ->orderBy('date')
-            ->orderBy('time')
-            ->with('lesson.location')
-            ->get();
+        if ($isInstructor) {
+            // Bookings where this user is the instructor
+            $instructorBookings = $user->instructorBookings()
+                ->whereDate('date', '>=', now()->toDateString())
+                ->orderBy('date')
+                ->orderBy('time')
+                ->with('lesson.location', 'user')
+                ->get();
 
-        $firstUpcomingLesson = $upcomingLessons->first();
+            return view('dashboard', compact('instructorBookings', 'isInstructor'));
+        } else {
+            // Customer logic (bookings)
+            $upcomingLessons = $user->bookings()
+                ->whereDate('date', '>=', now()->toDateString())
+                ->orderBy('date')
+                ->orderBy('time')
+                ->with('lesson.location')
+                ->get();
 
-        $previousLessons = $user->bookings()
-            ->whereDate('date', '<', now()->toDateString())
-            ->orderBy('date', 'desc')
-            ->orderBy('time', 'desc')
-            ->with('lesson.location')
-            ->get();
+            $firstUpcomingLesson = $upcomingLessons->first();
 
-        return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons'));
+            $previousLessons = $user->bookings()
+                ->whereDate('date', '<', now()->toDateString())
+                ->orderBy('date', 'desc')
+                ->orderBy('time', 'desc')
+                ->with('lesson.location')
+                ->get();
+
+            return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons', 'isInstructor'));
+        }
     }
 }

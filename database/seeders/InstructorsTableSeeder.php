@@ -3,18 +3,30 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class InstructorsTableSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('instructors')->insert([
-            ['name' => 'Duco Veenstra'],
-            ['name' => 'Waldemar van Dongen'],
-            ['name' => 'Ruud Terlingen'],
-            ['name' => 'Saskia Brink'],
-            ['name' => 'Bernie Vredenstein'],
-        ]);
+        $instructors = [
+            ['name' => 'Duco Veenstra', 'email' => 'duco@windsurf.com'],
+            ['name' => 'Waldemar van Dongen', 'email' => 'waldemar@windsurf.com'],
+            ['name' => 'Ruud Terlingen', 'email' => 'ruud@windsurf.com'],
+            ['name' => 'Saskia Brink', 'email' => 'saskia@windsurf.com'],
+            ['name' => 'Bernie Vredenstein', 'email' => 'bernie@windsurf.com'],
+        ];
+
+        foreach ($instructors as $instructor) {
+            // Create a user account for each instructor
+            User::create([
+                'name' => $instructor['name'],
+                'email' => $instructor['email'],
+                'password' => bcrypt('password'), // Default password
+                'role_id' => 2, // Use your instructor role_id
+                'is_active' => true,
+            ]);
+        }
     }
 }
