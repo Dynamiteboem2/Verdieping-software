@@ -9,7 +9,7 @@
 <body class="bg-[#eaf6fb] min-h-screen flex items-center justify-center">
     <div class="flex w-full min-h-screen">
         <!-- Left: Login Form -->
-        <div class="flex flex-col justify-center w-full max-w-md px-8 py-12 bg-white bg-opacity-95 rounded-none md:rounded-l-2xl shadow-xl">
+        <div class="flex flex-col justify-center w-full max-w-md px-8 py-12 bg-white bg-opacity-95 rounded-none md:rounded-l-2xl shadow-xl z-10">
             <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">WINDSURF SCHOL</h2>
             <h1 class="text-3xl font-extrabold mb-8">Inloggen</h1>
             <form method="POST" action="{{ route('login') }}">
@@ -44,9 +44,9 @@
                 </a>
             </div>
         </div>
-        <!-- Right: Image -->
+        <!-- Right: Full Height Image -->
         <div class="hidden md:block flex-1 bg-cover bg-center rounded-r-2xl" style="background-image: url('/images/windsurf-login.png');">
-            <!-- Place your windsurf image at public/images/windsurf-login.jpg -->
+            <!-- The image will cover the entire right side -->
         </div>
     </div>
 </body>
