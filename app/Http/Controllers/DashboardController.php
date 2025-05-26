@@ -11,17 +11,20 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Adjust these relationships/fields to match your Lesson model and user relation
-        $upcomingLessons = $user->lessons()
-            ->where('date', '>=', now())
+        $upcomingLessons = $user->bookings()
+            ->whereDate('date', '>=', now()->toDateString())
             ->orderBy('date')
+            ->orderBy('time')
+            ->with('lesson.location')
             ->get();
 
         $firstUpcomingLesson = $upcomingLessons->first();
 
-        $previousLessons = $user->lessons()
-            ->where('date', '<', now())
+        $previousLessons = $user->bookings()
+            ->whereDate('date', '<', now()->toDateString())
             ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->with('lesson.location')
             ->get();
 
         return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons'));

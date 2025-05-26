@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lesson_id')->constrained('lessons')->onDelete('cascade');
-            $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null'); // Add user_id field
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->time('time');
-            $table->string('name'); // Add name field
-            $table->string('email'); // Add email field
-            $table->string('phone_number'); // Add phone number field
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone_number')->nullable();
+            $table->foreignId('instructor_id')->nullable()->constrained('instructors')->onDelete('set null');
             $table->timestamps();
         });
     }

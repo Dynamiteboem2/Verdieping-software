@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             InstructorsTableSeeder::class,
             LocationsTableSeeder::class,
             LessonsTableSeeder::class,
+            BookingsTableSeeder::class,
         ]);
     }
 }

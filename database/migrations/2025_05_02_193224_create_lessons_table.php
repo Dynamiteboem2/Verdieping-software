@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); 
-            $table->decimal('price', 8, 2); 
-            $table->string('duration'); 
-            $table->integer('max_participants');
-            $table->string('materials_included'); 
-
-            // Foreign keys
-            $table->foreignId('instructor_id')->constrained('instructors')->onDelete('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
-
+            $table->string('type');
+            $table->decimal('price', 8, 2)->nullable();
+            $table->string('duration')->nullable();
+            $table->integer('max_participants')->nullable();
+            $table->string('materials_included')->nullable();
+            $table->foreignId('instructor_id')->nullable()->constrained('instructors')->onDelete('set null');
+            $table->foreignId('location_id')->nullable()->constrained('locations')->onDelete('set null');
             $table->timestamps();
         });
     }
