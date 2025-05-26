@@ -45,7 +45,7 @@
             </div>
         </div>
         <!-- Right: Image -->
-        <div class="hidden md:block flex-1 bg-cover bg-center rounded-r-2xl" style="background-image: url('public/images/windsurf-login.jpg');">
+        <div class="hidden md:block flex-1 bg-cover bg-center rounded-r-2xl" style="background-image: url('/images/windsurf-login.png');">
             <!-- Place your windsurf image at public/images/windsurf-login.jpg -->
         </div>
     </div>
