@@ -10,7 +10,7 @@
     <div class="flex w-full min-h-screen">
         <!-- Left: Login Form -->
         <div class="flex flex-col justify-center w-full max-w-md px-8 py-12 bg-white bg-opacity-95 rounded-none md:rounded-l-2xl shadow-xl z-10">
-            <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">WINDSURF SCHOL</h2>
+            <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">WINDSURF SCHOOL</h2>
             <h1 class="text-3xl font-extrabold mb-8">Inloggen</h1>
             <form method="POST" action="{{ route('login') }}">
                 @csrf

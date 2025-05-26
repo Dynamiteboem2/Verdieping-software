@@ -48,4 +48,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function lessons()
+    {
+        return $this->belongsToMany(\App\Models\Lesson::class, 'bookings');
+    }
 }
