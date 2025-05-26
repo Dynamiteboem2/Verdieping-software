@@ -34,11 +34,6 @@
                 </button>
             </form>
             <div class="mt-6 flex flex-col items-center space-y-2">
-                @if (Route::has('password.request'))
-                    <a class="text-sm text-[#0077b6] hover:underline" href="{{ route('password.request') }}">
-                        Wachtwoord vergeten?
-                    </a>
-                @endif
                 <a class="text-sm text-gray-600 hover:underline" href="{{ route('register') }}">
                     Nieuw hier? Account aanmaken
                 </a>
