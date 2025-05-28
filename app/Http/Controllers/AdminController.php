@@ -19,4 +19,19 @@ class AdminController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Rol bijgewerkt!');
     }
+    
+    public function updateUser(Request $request, $userId)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users,email,' . $userId,
+            'role_id' => 'required|integer|exists:roles,id',
+        ]);
+
+        $user = \App\Models\User::findOrFail($userId);
+        $user->email = $validated['email'];
+        $user->role_id = $validated['role_id'];
+        $user->save();
+
+        return redirect()->back()->with('success', 'Gebruiker bijgewerkt.');
+    }
 }
