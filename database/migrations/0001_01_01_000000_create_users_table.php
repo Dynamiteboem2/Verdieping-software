@@ -21,6 +21,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('activation_token')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('bsn_number', 20)->nullable();
+            $table->string('mobile', 20)->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

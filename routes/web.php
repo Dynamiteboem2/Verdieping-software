@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\SetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InstructorController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,5 +38,16 @@ Route::post('/activate/{token}', [SetPasswordController::class, 'setPassword'])-
 Route::get('/check-email', function () {
     return view('auth.check-email');
 })->name('check-email');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::post('/admin/users/{user}/role', [AdminController::class, 'updateRole'])->name('admin.updateRole');
+});
+
+Route::middleware(['auth', 'instructor'])->group(function () {
+    Route::get('/instructor/profile', [InstructorController::class, 'editProfile'])->name('instructor.editProfile');
+    Route::post('/instructor/profile', [InstructorController::class, 'updateProfile'])->name('instructor.updateProfile');
+    Route::post('/instructor/bookings/{booking}/cancel', [InstructorController::class, 'cancelBooking'])->name('instructor.cancelBooking');
+});
 
 require __DIR__.'/auth.php';
