@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Activeer je account - Windsurf</title>
+    <title>Activeer je account - KiteSurfschool Windkracht-12</title>
 </head>
 <body style="font-family: Arial, sans-serif; background: #f4f8fb; color: #222;">
     <div style="max-width: 480px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 32px;">
-        <h2 style="color: #0077b6;">Welkom bij Windsurf!</h2>
-        <p>Bedankt voor je registratie op onze windsurf-website.</p>
+        <h2 style="color: #0077b6;">Welkom bij KiteSurfschool Windkracht-12!</h2>
+        <p>Bedankt voor je registratie op onze kitesurf-website.</p>
         <p>
             Om je account te activeren en toegang te krijgen tot alle functies, klik op de onderstaande knop:
         </p>
@@ -31,7 +31,7 @@
         </p>
         <p style="font-size: 13px; color: #888;">
             Sportieve groet,<br>
-            Het Windsurf Team
+            Het KiteSurfschool Windkracht-12 Team
         </p>
     </div>
 </body>

@@ -1,6 +1,6 @@
 <header class="bg-white shadow">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">WINDSURF</h1>
+        <h1 class="text-2xl font-bold">KiteSurfschool Windkracht-12</h1>
         <nav class="space-x-4">
             <x-nav-link href="#home" :active="request()->is('/')">Home</x-nav-link>
             <x-nav-link href="#about" :active="request()->is('about')">About</x-nav-link>

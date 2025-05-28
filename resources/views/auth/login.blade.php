@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Inloggen | WINDSURF SCHOL</title>
+    <title>Inloggen | KiteSurfschool Windkracht-12</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -10,7 +10,7 @@
     <div class="flex w-full min-h-screen">
         <!-- Left: Login Form -->
         <div class="flex flex-col justify-center w-full max-w-md px-8 py-12 bg-white bg-opacity-95 rounded-none md:rounded-l-2xl shadow-xl z-10">
-            <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">WINDSURF SCHOOL</h2>
+            <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">KiteSurfschool Windkracht-12</h2>
             <h1 class="text-3xl font-extrabold mb-8">Inloggen</h1>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -40,7 +40,7 @@
             </div>
         </div>
         <!-- Right: Full Height Image -->
-        <div class="hidden md:block flex-1 bg-cover bg-center rounded-r-2xl" style="background-image: url('/images/windsurf-login.png');">
+        <div class="hidden md:block flex-1 bg-cover bg-center rounded-r-2xl" style="background-image: url('/images/kitesurf-login.png');">
             <!-- The image will cover the entire right side -->
         </div>
     </div>

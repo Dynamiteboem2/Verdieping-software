@@ -11,11 +11,11 @@ class InstructorsTableSeeder extends Seeder
     public function run(): void
     {
         $instructors = [
-            ['name' => 'Duco Veenstra', 'email' => 'duco@windsurf.com'],
-            ['name' => 'Waldemar van Dongen', 'email' => 'waldemar@windsurf.com'],
-            ['name' => 'Ruud Terlingen', 'email' => 'ruud@windsurf.com'],
-            ['name' => 'Saskia Brink', 'email' => 'saskia@windsurf.com'],
-            ['name' => 'Bernie Vredenstein', 'email' => 'bernie@windsurf.com'],
+            ['name' => 'Duco Veenstra', 'email' => 'duco@kitesurf.com'],
+            ['name' => 'Waldemar van Dongen', 'email' => 'waldemar@kitesurf.com'],
+            ['name' => 'Ruud Terlingen', 'email' => 'ruud@kitesurf.com'],
+            ['name' => 'Saskia Brink', 'email' => 'saskia@kitesurf.com'],
+            ['name' => 'Bernie Vredenstein', 'email' => 'kitesurf.com'],
         ];
 
         foreach ($instructors as $instructor) {
