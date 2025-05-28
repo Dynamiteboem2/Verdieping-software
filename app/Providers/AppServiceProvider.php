@@ -22,4 +22,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
     }
+    protected $listen = [
+    \Illuminate\Auth\Events\Login::class => [
+        \App\Listeners\LogAuthActivity::class,
+    ],
+    \Illuminate\Auth\Events\Logout::class => [
+        \App\Listeners\LogLogoutActivity::class,
+    ],
+];
 }
+
+
