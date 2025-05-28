@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstructorController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -49,5 +50,11 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::post('/instructor/profile', [InstructorController::class, 'updateProfile'])->name('instructor.updateProfile');
     Route::post('/instructor/bookings/{booking}/cancel', [InstructorController::class, 'cancelBooking'])->name('instructor.cancelBooking');
 });
+
+Route::get('/dashboard-tiles', function () {
+    return view('dashboard-tiles');
+})->middleware(['auth'])->name('dashboard.tiles');
+
+Route::get('/admin', [AdministratorController::class, 'index']);
 
 require __DIR__.'/auth.php';

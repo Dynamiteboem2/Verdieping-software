@@ -15,6 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @auth
+                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                            <x-nav-link :href="route('dashboard.tiles')" :active="request()->routeIs('dashboard.tiles')">
+                                Dashboard Tegels
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
