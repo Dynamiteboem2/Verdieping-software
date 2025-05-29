@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Booking;
+use App\Mail\LessonCancelled;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -45,5 +48,24 @@ class AdminController extends Controller
     {
         $bookings = \App\Models\Booking::with(['user', 'instructor', 'lesson'])->get();
         return view('admin.bookings', compact('bookings'));
+    }
+
+    public function notifyBooking(Request $request, Booking $booking)
+    {
+        $type = $request->input('type');
+        $reason = null;
+
+        if ($type === 'sick_instructor') {
+            $reason = 'ziekte';
+        } elseif ($type === 'windkracht') {
+            $reason = 'wind';
+        }
+
+        if ($reason) {
+            Mail::to($booking->user->email)->send(new LessonCancelled($booking, $reason));
+            return redirect()->back()->with('success', 'Annulering verstuurd naar de boeker.');
+        }
+
+        return redirect()->back()->with('success', 'Geen geldige reden opgegeven.');
     }
 }
