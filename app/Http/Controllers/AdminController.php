@@ -44,9 +44,30 @@ class AdminController extends Controller
         return view('admin.lessons', compact('lessons'));
     }
 
-    public function bookings()
+    public function bookings(Request $request)
     {
-        $bookings = \App\Models\Booking::with(['user', 'instructor', 'lesson'])->get();
+        $query = \App\Models\Booking::with(['user', 'instructor', 'lesson']);
+
+        // Filter by instructor
+        if ($request->filled('instructor')) {
+            $query->where('instructor_id', $request->instructor);
+        }
+
+        // Filter by period
+        if ($request->period === 'week') {
+            $query->whereBetween('date', [
+                now()->startOfWeek()->toDateString(),
+                now()->endOfWeek()->toDateString()
+            ]);
+        } elseif ($request->period === 'month') {
+            $query->whereMonth('date', now()->month)
+                  ->whereYear('date', now()->year);
+        } elseif ($request->period === 'year') {
+            $query->whereYear('date', now()->year);
+        }
+
+        $bookings = $query->paginate(5); // <-- Pagination here
+
         return view('admin.bookings', compact('bookings'));
     }
 
