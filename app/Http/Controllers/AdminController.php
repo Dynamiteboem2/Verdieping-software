@@ -63,7 +63,8 @@ class AdminController extends Controller
 
         if ($reason) {
             Mail::to($booking->user->email)->send(new LessonCancelled($booking, $reason));
-            return redirect()->back()->with('success', 'Annulering verstuurd naar de boeker.');
+            $booking->delete(); // Delete the booking after notifying
+            return redirect()->back()->with('success', 'Annulering verstuurd en boeking verwijderd.');
         }
 
         return redirect()->back()->with('success', 'Geen geldige reden opgegeven.');

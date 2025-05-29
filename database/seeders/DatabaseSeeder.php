@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
             RolesTableSeeder::class,
-            InstructorsTableSeeder::class,
+            instructorsTableSeeder::class,
             LocationsTableSeeder::class,
             LessonsTableSeeder::class,
             BookingsTableSeeder::class,
