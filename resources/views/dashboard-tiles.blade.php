@@ -11,6 +11,13 @@
                         </svg>
                         <span class="text-xl font-semibold">Gebruikers beheren</span>
                     </a>
+                    <!-- Admin: View All Lessons -->
+                    <a href="{{ route('admin.lessons') }}" class="bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow-lg flex flex-col items-center justify-center p-8 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m2 0a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v3a2 2 0 002 2zm0 0v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6" />
+                        </svg>
+                        <span class="text-xl font-semibold">Alle lessen (overzicht)</span>
+                    </a>
                 @endif
 
                 @if(Auth::user()->role_id == 2)

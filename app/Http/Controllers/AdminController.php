@@ -34,4 +34,10 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Gebruiker bijgewerkt.');
     }
+
+    public function lessons()
+    {
+        $lessons = \App\Models\Lesson::with('instructor')->get();
+        return view('admin.lessons', compact('lessons'));
+    }
 }
