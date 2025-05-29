@@ -37,7 +37,13 @@ class AdminController extends Controller
 
     public function lessons()
     {
-        $lessons = \App\Models\Lesson::with('instructor')->get();
+        $lessons = \App\Models\Lesson::with(['instructor', 'user'])->get();
         return view('admin.lessons', compact('lessons'));
+    }
+
+    public function bookings()
+    {
+        $bookings = \App\Models\Booking::with(['user', 'instructor', 'lesson'])->get();
+        return view('admin.bookings', compact('bookings'));
     }
 }

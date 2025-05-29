@@ -44,7 +44,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::post('/admin/users/{user}/role', [AdminController::class, 'updateRole'])->name('admin.updateRole');
     Route::post('/admin/users/{user}/update', [AdminController::class, 'updateUser'])->name('admin.updateUser');
-    Route::get('/admin/lessons', [App\Http\Controllers\AdminController::class, 'lessons'])->name('admin.lessons');
+    Route::get('/admin/bookings', [App\Http\Controllers\AdminController::class, 'bookings'])->name('admin.bookings');
 });
 
 Route::middleware(['auth', 'instructor'])->group(function () {

@@ -18,7 +18,7 @@ class LessonsTableSeeder extends Seeder
                 'duration' => '2.5 uur',
                 'max_participants' => 1,
                 'materials_included' => 'Inclusief alle materialen',
-                'instructor_id' => 1, // Default instructor
+                'instructor_id' => 3, // Default instructor
                 'location_id' => 1,
             ],
             [

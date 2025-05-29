@@ -22,7 +22,7 @@ class Lesson extends Model
     // Relationships
     public function instructor()
     {
-        return $this->belongsTo(Instructor::class);
+        return $this->belongsTo(User::class, 'instructor_id');
     }
 
     public function location()
@@ -33,5 +33,10 @@ class Lesson extends Model
     public function users()
     {
         return $this->belongsToMany(\App\Models\User::class, 'bookings');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 }

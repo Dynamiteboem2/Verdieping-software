@@ -21,17 +21,18 @@ class Booking extends Model
     ];
 
     // Relationships
-    public function lesson()
+    public function user()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 
     public function instructor()
     {
         return $this->belongsTo(\App\Models\User::class, 'instructor_id');
     }
-    public function user()
+
+    public function lesson()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(\App\Models\Lesson::class, 'lesson_id');
     }
 }
