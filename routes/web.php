@@ -50,6 +50,7 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::get('/instructor/profile', [InstructorController::class, 'editProfile'])->name('instructor.editProfile');
     Route::post('/instructor/profile', [InstructorController::class, 'updateProfile'])->name('instructor.updateProfile');
     Route::post('/instructor/bookings/{booking}/cancel', [InstructorController::class, 'cancelBooking'])->name('instructor.cancelBooking');
+    Route::get('/instructor/customers', [InstructorController::class, 'customers'])->name('instructor.customers');
 });
 
 Route::get('/dashboard-tiles', function () {

@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Register route middleware aliases
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'instructor' => \App\Http\Middleware\InstructorMiddleware::class, // <-- Add this line
             // Add other middleware aliases here if needed
         ]);
     })

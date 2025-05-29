@@ -15,7 +15,7 @@ class InstructorsTableSeeder extends Seeder
             ['name' => 'Waldemar van Dongen', 'email' => 'waldemar@kitesurf.com'],
             ['name' => 'Ruud Terlingen', 'email' => 'ruud@kitesurf.com'],
             ['name' => 'Saskia Brink', 'email' => 'saskia@kitesurf.com'],
-            ['name' => 'Bernie Vredenstein', 'email' => 'kitesurf.com'],
+            ['name' => 'Bernie Vredenstein', 'email' => 'bernie@kitesurf.com'],
         ];
 
         foreach ($instructors as $instructor) {

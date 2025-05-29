@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function instructorBookings()
     {
         return $this->hasMany(\App\Models\Booking::class, 'instructor_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\Role::class);
     }
 }
