@@ -47,7 +47,13 @@ class DashboardController extends Controller
     public function allBookings()
     {
         $user = auth()->user();
-        $allBookings = $user->bookings()->with('lesson.location')->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        // Only show bookings for the logged-in user, paginated
+        $allBookings = $user->bookings()
+            ->with('lesson.location')
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->paginate(10);
+
         return view('klant.all-bookings', compact('allBookings'));
     }
 }

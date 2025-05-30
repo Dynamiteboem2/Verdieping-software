@@ -8,7 +8,8 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded shadow max-w-md w-full text-center">
         <h1 class="text-2xl font-bold mb-4">iDEAL Betaling</h1>
-        <p class="mb-6">Betaal voor je lespakket: <strong>{{ $booking->lesson->type }}</strong></p>
+        <p class="mb-2">Betaal voor je lespakket: <strong>{{ $booking->lesson->type }}</strong></p>
+        <p class="mb-6">Prijs: <strong>€{{ number_format($booking->lesson->price, 2) }}</strong></p>
         <form method="POST" action="{{ route('booking.ideal.pay', $booking->id) }}">
             @csrf
             <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">

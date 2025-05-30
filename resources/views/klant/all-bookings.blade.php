@@ -34,6 +34,12 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-4 flex justify-center">
+                            {{-- Only show pagination if $allBookings is a paginator --}}
+                            @if(method_exists($allBookings, 'links'))
+                                {{ $allBookings->links() }}
+                            @endif
+                        </div>
                     </div>
                 @else
                     <div class="text-gray-500 mt-4">Je hebt nog geen boekingen.</div>
