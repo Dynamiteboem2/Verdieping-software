@@ -33,7 +33,7 @@ Route::post('/book-lesson', [BookingController::class, 'store'])->name('book.les
 Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
 Route::post('/booking/{id}/mark-paid', [BookingController::class, 'markPaid'])->name('booking.markPaid');
 Route::post('/booking/{id}/make-definitief', [BookingController::class, 'makeDefinitief'])->name('booking.makeDefinitief');
-Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+Route::post('/booking/{id}/cancel', [\App\Http\Controllers\BookingController::class, 'cancel'])->name('booking.cancel');
 Route::post('/booking/{id}/approve-cancellation', [BookingController::class, 'approveCancellation'])->name('booking.approveCancellation');
 Route::get('/booking/{id}/ideal', [BookingController::class, 'ideal'])->name('booking.ideal');
 Route::post('/booking/{id}/ideal-pay', [BookingController::class, 'idealPay'])->name('booking.ideal.pay');

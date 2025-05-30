@@ -99,7 +99,11 @@ class BookingController extends Controller
     public function markPaid($id)
     {
         $booking = Booking::findOrFail($id);
-        $this->authorize('update', $booking);
+        // Remove $this->authorize('update', $booking);
+        // Optionally, check if the logged-in user owns the booking:
+        if ($booking->user_id !== auth()->id()) {
+            abort(403);
+        }
         $booking->is_paid = true;
         $booking->save();
         // Optionally notify owner
@@ -110,7 +114,11 @@ class BookingController extends Controller
     public function cancel(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
-        $this->authorize('update', $booking);
+        // Remove $this->authorize('update', $booking);
+        // Optionally, check if the logged-in user owns the booking:
+        if ($booking->user_id !== auth()->id()) {
+            abort(403);
+        }
         $request->validate(['cancellation_reason' => 'required|string']);
         $booking->cancellation_reason = $request->cancellation_reason;
         $booking->status = 'geannuleerd';

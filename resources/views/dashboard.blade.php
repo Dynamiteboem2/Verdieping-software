@@ -162,6 +162,18 @@
                                             <div><span class="font-semibold">Locatie:</span> {{ $booking->lesson->location->name ?? '-' }}</div>
                                             <div><span class="font-semibold">Status:</span> {{ $booking->status }}</div>
                                             <div><span class="font-semibold">Betaald:</span> {{ $booking->is_paid ? 'Ja' : 'Nee' }}</div>
+                                            <div class="flex gap-2 mt-2">
+                                                @if($booking->status !== 'geannuleerd')
+                                                    <!-- Annuleer button -->
+                                                    <button onclick="showCancelModal({{ $booking->id }})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">Annuleer</button>
+                                                @endif
+                                                {{-- @if(!$booking->is_paid)
+                                                    <form method="POST" action="{{ route('booking.markPaid', $booking->id) }}">
+                                                        @csrf
+                                                        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">Markeer als betaald</button>
+                                                    </form>
+                                                @endif --}}
+                                            </div>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -172,6 +184,34 @@
                                 <div class="text-gray-500">Geen aankomende lessen.</div>
                             @endif
                         </div>
+                        <!-- Cancel modal -->
+                        <div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+                            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                                <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Les annuleren</h3>
+                                <form id="cancelForm" method="POST">
+                                    @csrf
+                                    <label class="block mb-2 font-semibold">Reden van annulering</label>
+                                    <textarea name="cancellation_reason" class="border rounded w-full mb-4" required placeholder="Geef een reden op"></textarea>
+                                    <div class="flex justify-end gap-2">
+                                        <button type="button" onclick="hideCancelModal()" class="bg-gray-300 px-4 py-2 rounded">Annuleren</button>
+                                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Verstuur</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <script>
+                            let cancelModal = document.getElementById('cancelModal');
+                            let cancelForm = document.getElementById('cancelForm');
+                            function showCancelModal(bookingId) {
+                                cancelForm.action = '/booking/' + bookingId + '/cancel';
+                                cancelModal.classList.remove('hidden');
+                                document.body.classList.add('overflow-hidden');
+                            }
+                            function hideCancelModal() {
+                                cancelModal.classList.add('hidden');
+                                document.body.classList.remove('overflow-hidden');
+                            }
+                        </script>
                     </div>
                     <!-- Right Column -->
                     <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
