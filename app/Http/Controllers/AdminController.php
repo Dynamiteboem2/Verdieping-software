@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Mail\LessonCancelled;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\UpdateAdminUserRequest;
 
 class AdminController extends Controller
 {
@@ -23,12 +24,9 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Rol bijgewerkt!');
     }
     
-    public function updateUser(Request $request, $userId)
+    public function updateUser(UpdateAdminUserRequest $request, $userId)
     {
-        $validated = $request->validate([
-            'email' => 'required|email|unique:users,email,' . $userId,
-            'role_id' => 'required|integer|exists:roles,id',
-        ]);
+        $validated = $request->validated();
 
         $user = \App\Models\User::findOrFail($userId);
         $user->email = $validated['email'];

@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\StoreBookingRequest;
 
 class BookingController extends Controller
 {
@@ -29,24 +30,13 @@ class BookingController extends Controller
         return view('booking.create', compact('lesson', 'instructors'));
     }
 
-    public function store(Request $request)
+    public function store(StoreBookingRequest $request)
     {
         if (!auth()->check()) {
             return redirect()->route('login')->with('error', 'Je moet eerst inloggen om een reservering te maken.');
         }
 
-        $validated = $request->validate([
-            'lesson_id' => 'required|exists:lessons,id',
-            'instructor_id' => 'required|exists:users,id', // <-- FIXED LINE
-            'date' => 'required|date_format:d/m/Y',
-            'time' => 'required',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'required|string|max:15',
-            'duo_name' => 'nullable|string|max:255',
-            'duo_email' => 'nullable|email|max:255',
-            'location_id' => 'required|string',
-        ]);
+        $validated = $request->validated();
 
         // Convert the date to the correct format for MySQL (YYYY-MM-DD)
         $formattedDate = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['date'])->format('Y-m-d');
