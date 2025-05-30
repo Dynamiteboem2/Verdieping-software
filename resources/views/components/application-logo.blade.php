@@ -1,1 +1,1 @@
-<h1 class="text-white font-bold">KiteSurfschool Windkracht-12</h1>
+<h1 class="font-bold text-gray-800 dark:text-white">KiteSurfschool Windkracht-12</h1>
