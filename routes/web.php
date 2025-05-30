@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\InvoiceController;
 
 
 Route::get('/', function () {
@@ -54,6 +55,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{user}/update', [AdminController::class, 'updateUser'])->name('admin.updateUser');
     Route::get('/admin/bookings', [App\Http\Controllers\AdminController::class, 'bookings'])->name('admin.bookings');
     Route::post('/admin/bookings/{booking}/notify', [AdminController::class, 'notifyBooking'])->name('admin.bookings.notify');
+    Route::get('/admin/invoices', [InvoiceController::class, 'index'])->name('admin.invoices');
+    Route::get('/admin/payments', [InvoiceController::class, 'index'])->name('admin.payments');
 });
 
 Route::middleware(['auth', 'instructor'])->group(function () {

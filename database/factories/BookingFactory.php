@@ -29,6 +29,7 @@ class BookingFactory extends Factory
             'email' => fake()->safeEmail(),
             'phone_number' => '06' . rand(10000000, 99999999),
             'instructor_id' => User::where('role_id', 2)->inRandomOrder()->first()?->id,
+            'is_paid' => fake()->boolean(60), // 60% kans op betaald, anders niet betaald
         ];
     }
 }
