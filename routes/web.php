@@ -61,6 +61,10 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::post('/instructor/profile', [InstructorController::class, 'updateProfile'])->name('instructor.updateProfile');
     Route::post('/instructor/bookings/{booking}/cancel', [InstructorController::class, 'cancelBooking'])->name('instructor.cancelBooking');
     Route::get('/instructor/customers', [InstructorController::class, 'customers'])->name('instructor.customers');
+    Route::post('/instructor/customers/{booking}/cancel', [InstructorController::class, 'cancelBooking'])->name('instructor.cancelBooking');
+    Route::get('/instructor/customers/{booking}/edit', [InstructorController::class, 'editBooking'])->name('instructor.editBooking');
+    Route::post('/instructor/customers/{booking}/update', [InstructorController::class, 'updateBooking'])->name('instructor.updateBooking');
+    Route::delete('/instructor/customers/{booking}', [InstructorController::class, 'destroyBooking'])->name('instructor.destroyBooking');
 });
 
 Route::get('/dashboard-tiles', function () {

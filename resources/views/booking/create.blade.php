@@ -74,6 +74,23 @@
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <!-- Select Location -->
+                    <div class="mb-4">
+                        <label for="location_id" class="block text-sm font-medium">Select Location</label>
+                        <select name="location_id" id="location_id" class="w-full border-gray-300 rounded mt-1 @error('location_id') border-red-500 @enderror" required>
+                            <option value="">Kies een locatie</option>
+                            <option value="Zandvoort" @if(old('location_id')=='Zandvoort') selected @endif>Zandvoort</option>
+                            <option value="Muiderberg" @if(old('location_id')=='Muiderberg') selected @endif>Muiderberg</option>
+                            <option value="Wijk aan Zee" @if(old('location_id')=='Wijk aan Zee') selected @endif>Wijk aan Zee</option>
+                            <option value="IJmuiden" @if(old('location_id')=='IJmuiden') selected @endif>IJmuiden</option>
+                            <option value="Scheveningen" @if(old('location_id')=='Scheveningen') selected @endif>Scheveningen</option>
+                            <option value="Hoek van Holland" @if(old('location_id')=='Hoek van Holland') selected @endif>Hoek van Holland</option>
+                        </select>
+                        @error('location_id')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Submit Button -->

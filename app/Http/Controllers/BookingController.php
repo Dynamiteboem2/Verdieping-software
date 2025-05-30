@@ -45,6 +45,7 @@ class BookingController extends Controller
             'phone_number' => 'required|string|max:15',
             'duo_name' => 'nullable|string|max:255',
             'duo_email' => 'nullable|email|max:255',
+            'location_id' => 'required|string',
         ]);
 
         // Convert the date to the correct format for MySQL (YYYY-MM-DD)
@@ -52,6 +53,9 @@ class BookingController extends Controller
 
         // Determine the user_id
         $userId = auth()->check() ? auth()->id() : null;
+
+        // Find the location model by name
+        $location = \App\Models\Location::where('name', $validated['location_id'])->firstOrFail();
 
         // Create the booking using Eloquent
         $booking = Booking::create([
@@ -67,6 +71,7 @@ class BookingController extends Controller
             'duo_email' => $validated['duo_email'] ?? null,
             'status' => 'voorlopig',
             'is_paid' => false,
+            'location_id' => $location->id,
         ]);
 
         // Send payment email with link to fake iDEAL using a Blade view
