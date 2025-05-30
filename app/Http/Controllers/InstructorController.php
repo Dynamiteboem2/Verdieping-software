@@ -11,7 +11,7 @@ class InstructorController extends Controller
     {
         $bookings = \App\Models\Booking::with('user', 'lesson')
             ->where('instructor_id', auth()->id())
-            ->paginate(10); // Paginate 10 per page
+            ->paginate(5); // Paginate 10 per page
         return view('instructor.customers', compact('bookings'));
     }
 

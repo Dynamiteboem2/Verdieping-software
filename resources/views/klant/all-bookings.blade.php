@@ -7,37 +7,36 @@
                 </a>
             </div>
             <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
-                <h2 class="text-2xl font-bold mb-4 text-[#0077b6]">Al jouw boekingen</h2>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Al jouw boekingen</h2>
                 @if($allBookings->count())
                     <div class="overflow-x-auto">
-                        <table class="min-w-full bg-white dark:bg-gray-800 rounded shadow">
+                        <table class="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 rounded shadow">
                             <thead>
                                 <tr>
-                                    <th class="px-4 py-2 border-b text-left">Type</th>
-                                    <th class="px-4 py-2 border-b text-left">Datum</th>
-                                    <th class="px-4 py-2 border-b text-left">Tijd</th>
-                                    <th class="px-4 py-2 border-b text-left">Locatie</th>
-                                    <th class="px-4 py-2 border-b text-left">Status</th>
-                                    <th class="px-4 py-2 border-b text-left">Betaald</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Type</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Datum</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Tijd</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Locatie</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Status</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase border-b">Betaald</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                                 @foreach($allBookings as $booking)
                                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-900">
-                                        <td class="px-4 py-2 border-b">{{ $booking->lesson->type ?? '-' }}</td>
-                                        <td class="px-4 py-2 border-b">{{ \Carbon\Carbon::parse($booking->date)->format('d-m-Y') }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $booking->time }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $booking->lesson->location->name ?? '-' }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $booking->status }}</td>
-                                        <td class="px-4 py-2 border-b">{{ $booking->is_paid ? 'Ja' : 'Nee' }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ $booking->lesson->type ?? '-' }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ \Carbon\Carbon::parse($booking->date)->format('d-m-Y') }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ $booking->time }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ $booking->lesson->location->name ?? '-' }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ $booking->status }}</td>
+                                        <td class="px-4 py-2 text-gray-700 dark:text-gray-200 border-b">{{ $booking->is_paid ? 'Ja' : 'Nee' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="mt-4 flex justify-center">
-                            {{-- Only show pagination if $allBookings is a paginator --}}
                             @if(method_exists($allBookings, 'links'))
-                                {{ $allBookings->links() }}
+                                {{ $allBookings->links('pagination::tailwind') }}
                             @endif
                         </div>
                     </div>

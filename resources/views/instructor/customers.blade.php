@@ -8,7 +8,7 @@
     </div>
     <div class="flex justify-center">
         <div class="w-full max-w-5xl">
-            <table class="min-w-full bg-white rounded-lg shadow mx-auto">
+            <table class="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 rounded-lg shadow mx-auto">
                 <thead>
                     <tr>
                         <th class="px-6 py-3 bg-gray-800 text-left text-xs font-medium text-white uppercase tracking-wider">Naam</th>
@@ -20,15 +20,15 @@
                         <th class="px-6 py-3 bg-gray-800 text-left text-xs font-medium text-white uppercase tracking-wider text-center">Acties</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                     @foreach($bookings as $booking)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $booking->user->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $booking->user->email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $booking->lesson->type }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($booking->date)->format('d-m-Y') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $booking->time }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{{ $booking->user->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{{ $booking->user->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{{ $booking->lesson->type }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{{ \Carbon\Carbon::parse($booking->date)->format('d-m-Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">{{ $booking->time }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-200">
                             {{ $booking->lesson->location->name ?? '-' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -63,7 +63,7 @@
                 </tbody>
             </table>
             <div class="mt-4 flex justify-center">
-                {{ $bookings->links() }}
+                {{ $bookings->links('pagination::tailwind') }}
             </div>
         </div>
     </div>
