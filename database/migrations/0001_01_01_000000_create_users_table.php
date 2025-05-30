@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->string('bsn_number', 20)->nullable();
             $table->string('mobile', 20)->nullable();
+            $table->string('landline', 20)->nullable(); // <-- Add this line
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

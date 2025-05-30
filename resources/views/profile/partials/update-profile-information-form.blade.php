@@ -3,7 +3,6 @@
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             Profielinformatie
         </h2>
-
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             Werk de profielinformatie en het e-mailadres van je account bij.
         </p>
@@ -32,12 +31,10 @@
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                         Je e-mailadres is niet geverifieerd.
-
                         <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                             Klik hier om de verificatie-e-mail opnieuw te versturen.
                         </button>
                     </p>
-
                     @if (session('status') === 'verification-link-sent')
                         <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
                             Er is een nieuwe verificatielink naar je e-mailadres gestuurd.
@@ -46,6 +43,22 @@
                 </div>
             @endif
         </div>
+
+        @if(isset($showMobile) && $showMobile)
+        <div>
+            <x-input-label for="mobile" :value="'Mobiel'" />
+            <x-text-input id="mobile" name="mobile" type="text" class="mt-1 block w-full" :value="old('mobile', $user->mobile)" required autocomplete="mobile" />
+            <x-input-error class="mt-2" :messages="$errors->get('mobile')" />
+        </div>
+        @endif
+
+        @if(isset($showBirthdate) && $showBirthdate)
+        <div>
+            <x-input-label for="birthdate" :value="'Geboortedatum'" />
+            <x-text-input id="birthdate" name="birthdate" type="text" class="mt-1 block w-full" :value="old('birthdate', $user->birthdate ? \Carbon\Carbon::parse($user->birthdate)->format('d-m-Y') : '')" required autocomplete="bdate" placeholder="dd-mm-jjjj" />
+            <x-input-error class="mt-2" :messages="$errors->get('birthdate')" />
+        </div>
+        @endif
 
         @if($user->role_id == 1 || $user->role_id == 2)
             <div>
@@ -57,7 +70,6 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>Opslaan</x-primary-button>
-
             @if (session('status') === 'profile-updated')
                 <p
                     x-data="{ show: true }"

@@ -30,6 +30,7 @@ class User extends Authenticatable
         'birthdate',
         'mobile',
         'bsn_number',
+        'landline', // <-- Add this line to make landline storable
     ];
 
     /**
