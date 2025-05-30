@@ -47,7 +47,7 @@
             @endif
         </div>
 
-        @if($user->role_id == 2)
+        @if($user->role_id == 1 || $user->role_id == 2)
             <div>
                 <x-input-label for="bsn_number" :value="'BSN-nummer'" />
                 <x-text-input id="bsn_number" name="bsn_number" type="text" class="mt-1 block w-full" :value="old('bsn_number', $user->bsn_number)" required autocomplete="bsn_number" />
