@@ -1,6 +1,14 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto py-8">
         <h2 class="text-2xl font-bold mb-6">Bewerk Les & Persoonsgegevens</h2>
+        <div class="mb-6">
+            <a href="{{ route('instructor.customers') }}" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded">
+                Terug naar overzicht
+            </a>
+            <a href="{{ route('klant.allBookings') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-2">
+                Toon alle boekingen
+            </a>
+        </div>
         <form method="POST" action="{{ route('instructor.updateBooking', $booking->id) }}">
             @csrf
             <div class="mb-4">

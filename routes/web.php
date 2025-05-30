@@ -65,6 +65,9 @@ Route::middleware(['auth', 'instructor'])->group(function () {
     Route::get('/instructor/customers/{booking}/edit', [InstructorController::class, 'editBooking'])->name('instructor.editBooking');
     Route::post('/instructor/customers/{booking}/update', [InstructorController::class, 'updateBooking'])->name('instructor.updateBooking');
     Route::delete('/instructor/customers/{booking}', [InstructorController::class, 'destroyBooking'])->name('instructor.destroyBooking');
+    Route::get('/instructor/overview/day', [\App\Http\Controllers\InstructorController::class, 'dayOverview'])->name('instructor.overview.day');
+    Route::get('/instructor/overview/week', [\App\Http\Controllers\InstructorController::class, 'weekOverview'])->name('instructor.overview.week');
+    Route::get('/instructor/overview/month', [\App\Http\Controllers\InstructorController::class, 'monthOverview'])->name('instructor.overview.month');
 });
 
 Route::get('/dashboard-tiles', function () {

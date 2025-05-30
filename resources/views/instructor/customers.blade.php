@@ -1,6 +1,11 @@
 {{-- filepath: resources/views/instructor/customers.blade.php --}}
 <x-app-layout>
     <h1 class="text-2xl font-bold mb-4 text-center">Mijn Klanten</h1>
+    <div class="flex justify-center mb-4">
+        <a href="{{ route('instructor.overview.day') }}" class="bg-blue-500 text-white px-3 py-1 rounded mx-1">Dagoverzicht</a>
+        <a href="{{ route('instructor.overview.week') }}" class="bg-blue-500 text-white px-3 py-1 rounded mx-1">Weekoverzicht</a>
+        <a href="{{ route('instructor.overview.month') }}" class="bg-blue-500 text-white px-3 py-1 rounded mx-1">Maandoverzicht</a>
+    </div>
     <div class="flex justify-center">
         <div class="w-full max-w-5xl">
             <table class="min-w-full bg-white rounded-lg shadow mx-auto">

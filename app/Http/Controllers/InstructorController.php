@@ -99,4 +99,54 @@ class InstructorController extends Controller
         $booking->delete();
         return back()->with('success', 'Boeking verwijderd.');
     }
+
+    public function dayOverview(Request $request)
+    {
+        $date = $request->input('date', now()->toDateString());
+        $bookings = \App\Models\Booking::with('user', 'lesson')
+            ->where('instructor_id', auth()->id())
+            ->whereDate('date', $date)
+            ->orderBy('time')
+            ->get();
+        return view('instructor.overview', [
+            'bookings' => $bookings,
+            'overviewType' => 'Dag',
+            'overviewDate' => $date,
+        ]);
+    }
+
+    public function weekOverview(Request $request)
+    {
+        $start = $request->input('start', now()->startOfWeek()->toDateString());
+        $end = $request->input('end', now()->endOfWeek()->toDateString());
+        $bookings = \App\Models\Booking::with('user', 'lesson')
+            ->where('instructor_id', auth()->id())
+            ->whereBetween('date', [$start, $end])
+            ->orderBy('date')
+            ->orderBy('time')
+            ->get();
+        return view('instructor.overview', [
+            'bookings' => $bookings,
+            'overviewType' => 'Week',
+            'overviewDate' => $start . ' t/m ' . $end,
+        ]);
+    }
+
+    public function monthOverview(Request $request)
+    {
+        $month = $request->input('month', now()->format('Y-m'));
+        $start = \Carbon\Carbon::parse($month . '-01')->startOfMonth()->toDateString();
+        $end = \Carbon\Carbon::parse($month . '-01')->endOfMonth()->toDateString();
+        $bookings = \App\Models\Booking::with('user', 'lesson')
+            ->where('instructor_id', auth()->id())
+            ->whereBetween('date', [$start, $end])
+            ->orderBy('date')
+            ->orderBy('time')
+            ->get();
+        return view('instructor.overview', [
+            'bookings' => $bookings,
+            'overviewType' => 'Maand',
+            'overviewDate' => \Carbon\Carbon::parse($start)->translatedFormat('F Y'),
+        ]);
+    }
 }
