@@ -16,7 +16,11 @@ class StoreBookingRequest extends FormRequest
         return [
             'lesson_id' => 'required|exists:lessons,id',
             'instructor_id' => 'required|exists:users,id',
-            'date' => 'required|date_format:d/m/Y',
+            'date' => [
+                'required',
+                'date_format:d/m/Y',
+                'after_or_equal:' . now()->addWeek()->format('d/m/Y'),
+            ],
             'time' => [
                 'required',
                 'date_format:H:i',
