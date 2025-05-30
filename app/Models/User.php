@@ -25,6 +25,11 @@ class User extends Authenticatable
         'activation_token', 
         'is_active',
         'role_id',
+        'address',
+        'city',
+        'birthdate',
+        'mobile',
+        'bsn_number',
     ];
 
     /**

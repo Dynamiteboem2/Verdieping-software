@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'instructor'])->group(function () {
 Route::get('/dashboard-tiles', function () {
     return view('dashboard-tiles');
 })->middleware(['auth'])->name('dashboard.tiles');
+
+Route::post('/user/complete-profile', [UserController::class, 'completeProfile'])->name('user.completeProfile');
 
 Route::get('/admin', [AdministratorController::class, 'index']);
 

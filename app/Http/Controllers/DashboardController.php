@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 ->with('lesson.location', 'user')
                 ->get();
 
-            return view('dashboard', compact('instructorBookings', 'isInstructor'));
+            return view('dashboard', compact('instructorBookings', 'isInstructor', 'user'));
         } else {
             // Customer logic (bookings)
             $upcomingLessons = $user->bookings()
@@ -40,7 +40,7 @@ class DashboardController extends Controller
                 ->with('lesson.location')
                 ->get();
 
-            return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons', 'isInstructor'));
+            return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons', 'isInstructor', 'user'));
         }
     }
 }
