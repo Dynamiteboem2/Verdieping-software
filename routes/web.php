@@ -31,6 +31,12 @@ Route::get('/book-lesson', [BookingController::class, 'create'])->name('book.les
 Route::get('/book-lesson/{lessonId}', [BookingController::class, 'createBooking'])->name('book.lesson.create');
 Route::post('/book-lesson', [BookingController::class, 'store'])->name('book.lesson.store');
 Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+Route::post('/booking/{id}/mark-paid', [BookingController::class, 'markPaid'])->name('booking.markPaid');
+Route::post('/booking/{id}/make-definitief', [BookingController::class, 'makeDefinitief'])->name('booking.makeDefinitief');
+Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+Route::post('/booking/{id}/approve-cancellation', [BookingController::class, 'approveCancellation'])->name('booking.approveCancellation');
+Route::get('/booking/{id}/ideal', [BookingController::class, 'ideal'])->name('booking.ideal');
+Route::post('/booking/{id}/ideal-pay', [BookingController::class, 'idealPay'])->name('booking.ideal.pay');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');

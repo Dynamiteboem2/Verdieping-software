@@ -21,6 +21,12 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number')->nullable();
             $table->foreignId('instructor_id')->nullable()->constrained('instructors')->onDelete('set null');
+            $table->string('status')->default('voorlopig'); // voorlopig/definitief/geannuleerd
+            $table->boolean('is_paid')->default(false);
+            $table->string('duo_name')->nullable();
+            $table->string('duo_email')->nullable();
+            $table->text('cancellation_reason')->nullable();
+            $table->boolean('cancellation_approved')->nullable();
             $table->timestamps();
         });
     }

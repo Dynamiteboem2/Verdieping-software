@@ -111,6 +111,14 @@
                                                 {{ \Carbon\Carbon::parse($booking->date . ' ' . $booking->time)->format('d-m-Y H:i') }}
                                             </div>
                                             <div><span class="font-semibold">Locatie:</span> {{ $booking->lesson->location->name ?? '-' }}</div>
+                                            <div><span class="font-semibold">Status:</span> {{ $booking->status }}</div>
+                                            <div><span class="font-semibold">Betaald:</span> {{ $booking->is_paid ? 'Ja' : 'Nee' }}</div>
+                                            @if(!$booking->is_paid)
+                                                <form method="POST" action="{{ route('booking.markPaid', $booking->id) }}">
+                                                    @csrf
+                                                    <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">Markeer als betaald</button>
+                                                </form>
+                                            @endif
                                         </li>
                                     @endforeach
                                 </ul>

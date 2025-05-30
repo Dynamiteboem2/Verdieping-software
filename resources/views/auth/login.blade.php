@@ -12,6 +12,13 @@
         <div class="flex flex-col justify-center w-full max-w-md px-8 py-12 bg-white bg-opacity-95 rounded-none md:rounded-l-2xl shadow-xl z-10">
             <h2 class="text-2xl font-bold text-[#0077b6] mb-2 tracking-wide">KiteSurfschool Windkracht-12</h2>
             <h1 class="text-3xl font-extrabold mb-8">Inloggen</h1>
+
+            @if (session('error'))
+                <div class="bg-red-100 text-red-800 p-4 rounded mb-6">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 

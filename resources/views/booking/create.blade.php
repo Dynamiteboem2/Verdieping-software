@@ -108,6 +108,14 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="mb-4">
+                    <label for="duo_name" class="block text-sm font-medium">Duo Name (optioneel)</label>
+                    <input type="text" name="duo_name" id="duo_name" class="w-full border-gray-300 rounded mt-1" value="{{ old('duo_name') }}">
+                </div>
+                <div class="mb-4">
+                    <label for="duo_email" class="block text-sm font-medium">Duo Email (optioneel)</label>
+                    <input type="email" name="duo_email" id="duo_email" class="w-full border-gray-300 rounded mt-1" value="{{ old('duo_email') }}">
+                </div>
             </div>
         </form>
     </div>

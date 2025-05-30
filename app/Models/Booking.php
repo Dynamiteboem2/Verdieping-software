@@ -18,6 +18,12 @@ class Booking extends Model
         'name',
         'email',
         'phone_number',
+        'status',
+        'is_paid',
+        'duo_name',
+        'duo_email',
+        'cancellation_reason',
+        'cancellation_approved',
     ];
 
     // Relationships
