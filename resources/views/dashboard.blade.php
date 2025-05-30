@@ -156,15 +156,12 @@
                                             <div><span class="font-semibold">Locatie:</span> {{ $booking->lesson->location->name ?? '-' }}</div>
                                             <div><span class="font-semibold">Status:</span> {{ $booking->status }}</div>
                                             <div><span class="font-semibold">Betaald:</span> {{ $booking->is_paid ? 'Ja' : 'Nee' }}</div>
-                                            @if(!$booking->is_paid)
-                                                <form method="POST" action="{{ route('booking.markPaid', $booking->id) }}">
-                                                    @csrf
-                                                    <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">Markeer als betaald</button>
-                                                </form>
-                                            @endif
                                         </li>
                                     @endforeach
                                 </ul>
+                                <div class="mt-4">
+                                    {{ $upcomingLessons->links() }}
+                                </div>
                             @else
                                 <div class="text-gray-500">Geen aankomende lessen.</div>
                             @endif

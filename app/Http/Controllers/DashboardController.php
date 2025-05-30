@@ -29,7 +29,7 @@ class DashboardController extends Controller
                 ->orderBy('date')
                 ->orderBy('time')
                 ->with('lesson.location')
-                ->get();
+                ->paginate(2); // Paginate 2 per page
 
             $firstUpcomingLesson = $upcomingLessons->first();
 
