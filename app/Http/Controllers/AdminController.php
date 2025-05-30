@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Mail\LessonCancelled;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UpdateAdminUserRequest;
+use App\Http\Requests\StoreAdminUserRequest;
 
 class AdminController extends Controller
 {
@@ -87,5 +89,28 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('success', 'Geen geldige reden opgegeven.');
+    }
+
+    public function createUser(StoreAdminUserRequest $request)
+    {
+        $validated = $request->validated();
+
+        $user = \App\Models\User::create([
+            'email' => $validated['email'],
+            'role_id' => $validated['role_id'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'is_active' => true,
+        ]);
+
+        // Send styled mail to the new user with the password using a Blade view
+        \Illuminate\Support\Facades\Mail::send('emails.admin-user-created', [
+            'email' => $user->email,
+            'password' => $validated['password'],
+        ], function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Je account is aangemaakt');
+        });
+
+        return redirect()->back()->with('success', 'Gebruiker succesvol aangemaakt en e-mail verstuurd.');
     }
 }

@@ -57,6 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/bookings/{booking}/notify', [AdminController::class, 'notifyBooking'])->name('admin.bookings.notify');
     Route::get('/admin/invoices', [InvoiceController::class, 'index'])->name('admin.invoices');
     Route::get('/admin/payments', [InvoiceController::class, 'index'])->name('admin.payments');
+    Route::post('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.createUser');
 });
 
 Route::middleware(['auth', 'instructor'])->group(function () {

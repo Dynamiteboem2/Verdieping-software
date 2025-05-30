@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateProfileAddressRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,16 +41,11 @@ class ProfileController extends Controller
     /**
      * Update the user's address information.
      */
-    public function updateAddress(Request $request): RedirectResponse
+    public function updateAddress(UpdateProfileAddressRequest $request): RedirectResponse
     {
         $user = $request->user();
 
-        $validated = $request->validate([
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'birthdate' => 'required|date_format:d-m-Y',
-            'mobile' => 'required|string|max:20',
-        ]);
+        $validated = $request->validated();
 
         // Convert birthdate to Y-m-d for storage
         $validated['birthdate'] = \Carbon\Carbon::createFromFormat('d-m-Y', $validated['birthdate'])->format('Y-m-d');

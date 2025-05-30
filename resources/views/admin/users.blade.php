@@ -40,6 +40,32 @@
                         </ul>
                     </div>
                 @endif
+
+                {{-- Admin: Add new user section --}}
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">Nieuwe gebruiker toevoegen</h3>
+                    <form method="POST" action="{{ route('admin.createUser') }}" class="flex flex-col md:flex-row gap-4 items-end">
+                        @csrf
+                        <div>
+                            <label for="new_email" class="block text-xs font-semibold mb-1">E-mail</label>
+                            <input type="email" name="email" id="new_email" class="border border-gray-300 rounded px-2 py-1 w-56" required>
+                        </div>
+                        <div>
+                            <label for="new_role_id" class="block text-xs font-semibold mb-1">Rol</label>
+                            <select name="role_id" id="new_role_id" class="border border-gray-300 rounded px-2 py-1 w-40" required>
+                                <option value="2">Instructeur</option>
+                                <option value="3">Klant</option>
+                                <option value="1">Admin</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="new_password" class="block text-xs font-semibold mb-1">Standaard wachtwoord</label>
+                            <input type="text" name="password" id="new_password" class="border border-gray-300 rounded px-2 py-1 w-40" required>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-xs font-semibold">Aanmaken</button>
+                    </form>
+                </div>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 rounded shadow">
                         <thead>
