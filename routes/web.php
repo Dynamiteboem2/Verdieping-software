@@ -70,5 +70,6 @@ Route::get('/dashboard-tiles', function () {
 Route::post('/user/complete-profile', [UserController::class, 'completeProfile'])->name('user.completeProfile');
 
 Route::get('/admin', [AdministratorController::class, 'index']);
+Route::get('/klant/boekingen', [DashboardController::class, 'allBookings'])->name('klant.allBookings');
 
 require __DIR__.'/auth.php';

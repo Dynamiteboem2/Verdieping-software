@@ -43,4 +43,11 @@ class DashboardController extends Controller
             return view('dashboard', compact('firstUpcomingLesson', 'upcomingLessons', 'previousLessons', 'isInstructor', 'user'));
         }
     }
+
+    public function allBookings()
+    {
+        $user = auth()->user();
+        $allBookings = $user->bookings()->with('lesson.location')->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        return view('klant.all-bookings', compact('allBookings'));
+    }
 }

@@ -125,6 +125,12 @@
                 {{-- User dashboard --}}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2 flex flex-col space-y-6">
+                        <!-- Button to all bookings -->
+                        <div class="mb-2">
+                            <a href="{{ route('klant.allBookings') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                                Toon alle boekingen
+                            </a>
+                        </div>
                         <!-- First Upcoming Lesson -->
                         <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-4">
                             <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Eerstvolgende les</h3>
