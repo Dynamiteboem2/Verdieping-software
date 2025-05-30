@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateInstructorBookingRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,21 +36,14 @@ class InstructorController extends Controller
         return view('instructor.edit-booking', compact('booking'));
     }
 
-    public function updateBooking(Request $request, $bookingId)
+    public function updateBooking(UpdateInstructorBookingRequest $request, $bookingId)
     {
         $booking = \App\Models\Booking::with('user', 'lesson')->findOrFail($bookingId);
         if ($booking->instructor_id !== auth()->id()) {
             abort(403);
         }
 
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'time' => 'required',
-            'user.name' => 'required|string|max:255',
-            'user.email' => 'required|email|max:255',
-            'user.mobile' => 'nullable|string|max:20',
-            'location_id' => 'required|string',
-        ]);
+        $validated = $request->validated();
 
         // Update lesson data
         $booking->date = $validated['date'];
@@ -71,7 +65,7 @@ class InstructorController extends Controller
         $booking->user->save();
 
         // Send mail to customer about the edit using a Blade view
-        Mail::send('emails.booking-edited', [
+        \Mail::send('emails.booking-edited', [
             'booking' => $booking,
         ], function ($message) use ($booking) {
             $message->to($booking->user->email)
