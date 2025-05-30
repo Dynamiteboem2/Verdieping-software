@@ -10,6 +10,10 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        <div class="mb-4 flex gap-2">
+                            <a href="{{ route('admin.bookings') }}" class="bg-blue-500 text-white px-3 py-1 rounded">Toon alle boekingen</a>
+                            {{-- ...you can add more admin quick links here if needed... --}}
+                        </div>
                         <form method="GET" class="mb-6 flex flex-wrap gap-4 items-end">
                             <div>
                                 <label for="instructor" class="block text-xs font-semibold mb-1">Instructeur</label>
@@ -45,17 +49,18 @@
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Type</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Datum</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Tijd</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Betaald</th>
                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Acties</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                                 @if($bookings->total() === 0)
                                     <tr>
-                                        <td colspan="6" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">Geen boekingen gevonden.</td>
+                                        <td colspan="7" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">Geen boekingen gevonden.</td>
                                     </tr>
                                     @for($i = 0; $i < ($bookings->perPage() - 1); $i++)
                                         <tr>
-                                            <td colspan="6" class="px-4 py-2 text-transparent">-</td>
+                                            <td colspan="7" class="px-4 py-2 text-transparent">-</td>
                                         </tr>
                                     @endfor
                                 @else
@@ -66,6 +71,9 @@
                                             <td class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ $booking->lesson->type ?? 'Onbekend' }}</td>
                                             <td class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ $booking->date ?? '-' }}</td>
                                             <td class="px-4 py-2 text-gray-700 dark:text-gray-200">{{ $booking->time ?? '-' }}</td>
+                                            <td class="px-4 py-2 text-gray-700 dark:text-gray-200">
+                                                {{ $booking->is_paid ? 'Ja' : 'Nee' }}
+                                            </td>
                                             <td class="px-4 py-2 flex gap-2">
                                                 <form method="POST" action="{{ route('admin.bookings.notify', [$booking->id]) }}">
                                                     @csrf
@@ -86,7 +94,7 @@
                                     @endforeach
                                     @for($i = 0; $i < ($bookings->perPage() - $bookings->count()); $i++)
                                         <tr>
-                                            <td colspan="6" class="px-4 py-2 text-transparent">-</td>
+                                            <td colspan="7" class="px-4 py-2 text-transparent">-</td>
                                         </tr>
                                     @endfor
                                 @endif
