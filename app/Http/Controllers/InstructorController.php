@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InstructorController extends Controller
 {
@@ -36,7 +37,7 @@ class InstructorController extends Controller
 
     public function updateBooking(Request $request, $bookingId)
     {
-        $booking = \App\Models\Booking::with('user')->findOrFail($bookingId);
+        $booking = \App\Models\Booking::with('user', 'lesson')->findOrFail($bookingId);
         if ($booking->instructor_id !== auth()->id()) {
             abort(403);
         }
@@ -46,33 +47,55 @@ class InstructorController extends Controller
             'time' => 'required',
             'user.name' => 'required|string|max:255',
             'user.email' => 'required|email|max:255',
-            'user.address' => 'nullable|string|max:255',
-            'user.city' => 'nullable|string|max:255',
             'user.mobile' => 'nullable|string|max:20',
+            'location_id' => 'required|string',
         ]);
 
         // Update lesson data
         $booking->date = $validated['date'];
         $booking->time = $validated['time'];
+
+        // Update location
+        $location = \App\Models\Location::where('name', $validated['location_id'])->first();
+        if ($location) {
+            $booking->lesson->location_id = $location->id;
+            $booking->lesson->save();
+        }
+
         $booking->save();
 
         // Update user data
         $booking->user->name = $validated['user']['name'];
         $booking->user->email = $validated['user']['email'];
-        $booking->user->address = $validated['user']['address'] ?? $booking->user->address;
-        $booking->user->city = $validated['user']['city'] ?? $booking->user->city;
         $booking->user->mobile = $validated['user']['mobile'] ?? $booking->user->mobile;
         $booking->user->save();
+
+        // Send mail to customer about the edit using a Blade view
+        Mail::send('emails.booking-edited', [
+            'booking' => $booking,
+        ], function ($message) use ($booking) {
+            $message->to($booking->user->email)
+                ->subject('Je boeking is aangepast');
+        });
 
         return redirect()->route('instructor.customers')->with('success', 'Les en persoonsgegevens bijgewerkt.');
     }
 
     public function destroyBooking($bookingId)
     {
-        $booking = \App\Models\Booking::findOrFail($bookingId);
+        $booking = \App\Models\Booking::with('user')->findOrFail($bookingId);
         if ($booking->instructor_id !== auth()->id()) {
             abort(403);
         }
+
+        // Send mail to customer about deletion using a Blade view
+        Mail::send('emails.booking-deleted', [
+            'booking' => $booking,
+        ], function ($message) use ($booking) {
+            $message->to($booking->user->email)
+                ->subject('Je boeking is verwijderd');
+        });
+
         $booking->delete();
         return back()->with('success', 'Boeking verwijderd.');
     }
