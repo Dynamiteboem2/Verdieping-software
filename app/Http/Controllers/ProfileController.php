@@ -38,6 +38,28 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's address information.
+     */
+    public function updateAddress(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'birthdate' => 'required|date_format:d-m-Y',
+            'mobile' => 'required|string|max:20',
+        ]);
+
+        // Convert birthdate to Y-m-d for storage
+        $validated['birthdate'] = \Carbon\Carbon::createFromFormat('d-m-Y', $validated['birthdate'])->format('Y-m-d');
+
+        $user->update($validated);
+
+        return Redirect::route('profile.edit')->with('status', 'address-updated');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
