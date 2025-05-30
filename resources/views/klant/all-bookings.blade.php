@@ -8,6 +8,34 @@
             </div>
             <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
                 <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">Al jouw boekingen</h2>
+                {{-- Success message --}}
+                @if(session('success'))
+                    <div 
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        x-init="setTimeout(() => show = false, 5000)"
+                        class="mb-4 p-3 bg-green-100 text-green-800 rounded"
+                    >
+                        {{ session('success') }}
+                    </div>
+                @endif
+                {{-- Error messages --}}
+                @if($errors->any())
+                    <div 
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        x-init="setTimeout(() => show = false, 5000)"
+                        class="mb-4 p-3 bg-red-100 text-red-800 rounded"
+                    >
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if($allBookings->count())
                     <div class="overflow-x-auto">
                         <table class="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 rounded shadow">

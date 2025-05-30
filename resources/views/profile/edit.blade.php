@@ -7,6 +7,54 @@
 
     <div class="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
         <div class="max-w-4xl mx-auto space-y-10">
+            {{-- Success message --}}
+            @if(session('success'))
+                <div 
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 5000)"
+                    class="mb-4 p-3 bg-green-100 text-green-800 rounded"
+                >
+                    {{ session('success') }}
+                </div>
+            @endif
+            {{-- Error messages --}}
+            @if($errors->any())
+                <div 
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 5000)"
+                    class="mb-4 p-3 bg-red-100 text-red-800 rounded"
+                >
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>
+                                @if(str_contains($error, 'email'))
+                                    Ongeldig e-mailadres: {{ $error }}
+                                @elseif(str_contains($error, 'name'))
+                                    Ongeldige naam: {{ $error }}
+                                @elseif(str_contains($error, 'mobile'))
+                                    Ongeldig mobiel nummer: {{ $error }}
+                                @elseif(str_contains($error, 'birthdate'))
+                                    Ongeldige geboortedatum: {{ $error }}
+                                @elseif(str_contains($error, 'address'))
+                                    Ongeldig adres: {{ $error }}
+                                @elseif(str_contains($error, 'city'))
+                                    Ongeldige woonplaats: {{ $error }}
+                                @elseif(str_contains($error, 'bsn_number'))
+                                    Ongeldig BSN-nummer: {{ $error }}
+                                @elseif(str_contains($error, 'landline'))
+                                    Ongeldig vast telefoonnummer: {{ $error }}
+                                @else
+                                    {{ $error }}
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- Persoonlijke gegevens & adres -->
             <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 flex flex-col md:flex-row gap-10">
                 <div class="flex-1">

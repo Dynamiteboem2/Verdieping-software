@@ -9,6 +9,50 @@
                 Toon alle boekingen
             </a>
         </div>
+        {{-- Success message --}}
+        @if(session('success'))
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-transition
+                x-init="setTimeout(() => show = false, 5000)"
+                class="mb-4 p-3 bg-green-100 text-green-800 rounded"
+            >
+                {{ session('success') }}
+            </div>
+        @endif
+        {{-- Error messages --}}
+        @if($errors->any())
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-transition
+                x-init="setTimeout(() => show = false, 5000)"
+                class="mb-4 p-3 bg-red-100 text-red-800 rounded"
+            >
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        <li>
+                            @if(str_contains($error, 'date'))
+                                Ongeldige datum: {{ $error }}
+                            @elseif(str_contains($error, 'time'))
+                                Ongeldige tijd: {{ $error }}
+                            @elseif(str_contains($error, 'user.name'))
+                                Ongeldige naam: {{ $error }}
+                            @elseif(str_contains($error, 'user.email'))
+                                Ongeldig e-mailadres: {{ $error }}
+                            @elseif(str_contains($error, 'location_id'))
+                                Ongeldige locatie: {{ $error }}
+                            @elseif(str_contains($error, 'user.mobile'))
+                                Ongeldig mobiel nummer: {{ $error }}
+                            @else
+                                {{ $error }}
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form method="POST" action="{{ route('instructor.updateBooking', $booking->id) }}">
             @csrf
             <div class="mb-4">
