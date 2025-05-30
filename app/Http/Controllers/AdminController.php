@@ -14,7 +14,7 @@ class AdminController extends Controller
 {
     public function users()
     {
-        $users = \App\Models\User::all();
+        $users = \App\Models\User::paginate(5); // Use paginate instead of all()
         return view('admin.users', compact('users'));
     }
 

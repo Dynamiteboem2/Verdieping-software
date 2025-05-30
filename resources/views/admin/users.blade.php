@@ -125,6 +125,12 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4 flex justify-center">
+                        {{-- Only show pagination if $users is a paginator instance --}}
+                        @if(method_exists($users, 'links'))
+                            {{ $users->links('pagination::tailwind') }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
