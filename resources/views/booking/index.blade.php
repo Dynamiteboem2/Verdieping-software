@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Lesson</title>
+    <title>Les boeken</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 text-gray-800">
-    <!-- Include the navbar component -->
+    <!-- Navbar component -->
     <x-navbar />
 
     <div class="container mx-auto py-8">
-        <h1 class="text-2xl font-bold mb-6">Book a Lesson</h1>
+        <h1 class="text-2xl font-bold mb-6">Boek een les</h1>
 
         @if (session('success'))
             <div class="bg-green-100 text-green-800 p-4 rounded mb-6">
@@ -37,20 +37,20 @@
                 <div class="bg-white p-6 rounded shadow">
                     <h2 class="text-xl font-bold mb-2">{{ $lesson->type }}</h2>
                     <ul class="text-gray-700 mb-4">
-                        <li>Duration: {{ $lesson->duration }}</li>
-                        <li>Price: €{{ number_format($lesson->price, 2) }}</li>
-                        <li>Max Participants: {{ $lesson->max_participants }}</li>
+                        <li>Duur: {{ $lesson->duration }}</li>
+                        <li>Prijs: €{{ number_format($lesson->price, 2) }}</li>
+                        <li>Maximaal aantal deelnemers: {{ $lesson->max_participants }}</li>
                         <li>{{ $lesson->materials_included }}</li>
                     </ul>
                     @auth
                         <form action="{{ route('book.lesson.create', $lesson->id) }}" method="GET">
                             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                Book Now
+                                Boek nu
                             </button>
                         </form>
                     @else
                         <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed" title="Log in om te boeken" disabled>
-                            Book Now
+                            Boek nu
                         </button>
                     @endauth
                 </div>

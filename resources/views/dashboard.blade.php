@@ -2,12 +2,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            {{-- Tiles for Admin and Instructor --}}
+            {{-- Tegels voor Admin en Instructeur --}}
             @if($user->role_id == 1 || $user->role_id == 2)
                 <div class="max-w-6xl mx-auto px-4 mb-8">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                         @if($user->role_id == 1)
-                            <!-- Admin: Manage Users -->
+                            <!-- Admin: Gebruikers beheren -->
                             <a href="{{ route('admin.users') }}" class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg flex flex-col items-center justify-center p-8 transition">
                                 <span class="mb-4 rounded-full bg-white shadow flex items-center justify-center h-12 w-12">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-blue-500">
@@ -16,7 +16,7 @@
                                 </span>
                                 <span class="text-xl font-semibold">Gebruikers beheren</span>
                             </a>
-                            <!-- Admin: View All bookings -->
+                            <!-- Admin: Alle lessen -->
                             <a href="{{ route('admin.bookings') }}" class="bg-purple-500 hover:bg-purple-600 text-white rounded-lg shadow-lg flex flex-col items-center justify-center p-8 transition">
                                 <span class="mb-4 rounded-full bg-white shadow flex items-center justify-center h-12 w-12">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-purple-500">
@@ -25,7 +25,7 @@
                                 </span>
                                 <span class="text-xl font-semibold">Alle lessen (overzicht)</span>
                             </a>
-                            <!-- Admin: Payments/Invoices -->
+                            <!-- Admin: Facturen & betalingen -->
                             <a href="{{ route('admin.payments') }}" class="bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-lg flex flex-col items-center justify-center p-8 transition">
                                 <span class="mb-4 rounded-full bg-white shadow flex items-center justify-center h-12 w-12">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-green-500">
@@ -37,7 +37,7 @@
                         @endif
 
                         @if($user->role_id == 2)
-                            <!-- Instructor: Manage Customers/Lessons -->
+                            <!-- Instructeur: Klanten/Lessen beheren -->
                             <a href="{{ route('instructor.customers') }}" class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg flex flex-col items-center justify-center p-8 transition">
                                 <span class="mb-4 rounded-full bg-white shadow flex items-center justify-center h-12 w-12">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-blue-500">
@@ -51,7 +51,7 @@
                 </div>
             @endif
 
-            {{-- Profile completion modal --}}
+            {{-- Profiel aanvullen modal --}}
             @php
                 $needsProfile = isset($user) && (
                     !$user->name ||
@@ -66,35 +66,87 @@
                 <div id="profileModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-md relative">
                         <h2 class="text-lg font-bold mb-4 text-[#0077b6]">Vul je gegevens in</h2>
+                        {{-- Foutmeldingen voor profiel modal --}}
+                        @if($errors->any())
+                            <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>
+                                            @if(str_contains($error, 'name'))
+                                                Naam is verplicht en mag niet leeg zijn.
+                                            @elseif(str_contains($error, 'address'))
+                                                Adres is verplicht en mag niet leeg zijn.
+                                            @elseif(str_contains($error, 'city'))
+                                                Woonplaats is verplicht en mag niet leeg zijn.
+                                            @elseif(str_contains($error, 'birthdate'))
+                                                Vul een geldige geboortedatum in (dd-mm-jjjj).
+                                            @elseif(str_contains($error, 'mobile'))
+                                                Mobiel nummer is verplicht en mag alleen cijfers bevatten.
+                                            @elseif(str_contains($error, 'bsn_number'))
+                                                BSN-nummer is verplicht voor instructeurs/admins.
+                                            @else
+                                                {{ $error }}
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('user.completeProfile') }}">
                             @csrf
                             <input type="hidden" name="email" value="{{ $user->email }}">
                             <div class="mb-2">
                                 <label class="block mb-1 font-semibold">Naam</label>
                                 <input name="name" value="{{ old('name', $user->name) }}" required class="border rounded w-full"/>
+                                @error('name')
+                                    <span class="text-red-500 text-xs">Naam is verplicht en mag niet leeg zijn.</span>
+                                @enderror
                             </div>
                             <div class="mb-2">
                                 <label class="block mb-1 font-semibold">Adres</label>
                                 <input name="address" value="{{ old('address', $user->address) }}" required class="border rounded w-full"/>
+                                @error('address')
+                                    <span class="text-red-500 text-xs">Adres is verplicht en mag niet leeg zijn.</span>
+                                @enderror
                             </div>
                             <div class="mb-2">
                                 <label class="block mb-1 font-semibold">Woonplaats</label>
                                 <input name="city" value="{{ old('city', $user->city) }}" required class="border rounded w-full"/>
+                                @error('city')
+                                    <span class="text-red-500 text-xs">Woonplaats is verplicht en mag niet leeg zijn.</span>
+                                @enderror
                             </div>
                             <div class="mb-2">
                                 <label class="block mb-1 font-semibold">Geboortedatum</label>
                                 <input id="birthdate" name="birthdate" type="text"
                                     value="{{ old('birthdate', $user->birthdate ? \Carbon\Carbon::parse($user->birthdate)->format('d-m-Y') : '') }}"
                                     required class="border rounded w-full" placeholder="dd-mm-jjjj"/>
+                                @error('birthdate')
+                                    <span class="text-red-500 text-xs">Vul een geldige geboortedatum in (dd-mm-jjjj).</span>
+                                @enderror
                             </div>
                             <div class="mb-2">
                                 <label class="block mb-1 font-semibold">Mobiel</label>
-                                <input name="mobile" value="{{ old('mobile', $user->mobile) }}" required class="border rounded w-full"/>
+                                <input 
+                                    name="mobile" 
+                                    value="{{ old('mobile', $user->mobile) }}" 
+                                    required 
+                                    class="border rounded w-full"
+                                    pattern="[0-9]+"
+                                    inputmode="numeric"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                />
+                                @error('mobile')
+                                    <span class="text-red-500 text-xs">Mobiel nummer is verplicht en mag alleen cijfers bevatten.</span>
+                                @enderror
                             </div>
                             @if($user->role_id == 1 || $user->role_id == 2)
                                 <div class="mb-2">
                                     <label class="block mb-1 font-semibold">BSN-nummer</label>
                                     <input name="bsn_number" value="{{ old('bsn_number', $user->bsn_number) }}" required placeholder="BSN-nummer" class="border rounded w-full"/>
+                                    @error('bsn_number')
+                                        <span class="text-red-500 text-xs">BSN-nummer is verplicht voor instructeurs/admins.</span>
+                                    @enderror
                                 </div>
                             @endif
                             <button class="bg-blue-500 text-white px-4 py-2 rounded w-full">Opslaan</button>
@@ -102,13 +154,13 @@
                     </div>
                 </div>
                 <script>
-                    // Prevent interaction with the rest of the page while modal is open
+                    // Voorkom interactie met de rest van de pagina zolang de modal open is
                     document.body.classList.add('overflow-hidden');
                 </script>
             @endif
 
             @if($isInstructor)
-                {{-- Instructor dashboard --}}
+                {{-- Instructeur dashboard --}}
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-4">
                     <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Lessen die je moet geven</h3>
                     @if(isset($instructorLessons) && $instructorLessons->count())
@@ -129,16 +181,16 @@
                     @endif
                 </div>
             @elseif($user->role_id != 1 && $user->role_id != 2)
-                {{-- User dashboard --}}
+                {{-- Gebruiker dashboard --}}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="md:col-span-2 flex flex-col space-y-6">
-                        <!-- Button to all bookings -->
+                        <!-- Knop naar alle boekingen -->
                         <div class="mb-2">
                             <a href="{{ route('klant.allBookings') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                                 Toon alle boekingen
                             </a>
                         </div>
-                        <!-- First Upcoming Lesson -->
+                        <!-- Eerstvolgende les -->
                         <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-4">
                             <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Eerstvolgende les</h3>
                             @if($firstUpcomingLesson)
@@ -154,7 +206,7 @@
                                 <div class="text-gray-500">Je hebt geen aankomende lessen.</div>
                             @endif
                         </div>
-                        <!-- Upcoming Lessons -->
+                        <!-- Aankomende lessen -->
                         <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 flex-1">
                             <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Aankomende lessen</h3>
                             @if($upcomingLessons->count())
@@ -171,15 +223,9 @@
                                             <div><span class="font-semibold">Betaald:</span> {{ $booking->is_paid ? 'Ja' : 'Nee' }}</div>
                                             <div class="flex gap-2 mt-2">
                                                 @if($booking->status !== 'geannuleerd')
-                                                    <!-- Annuleer button -->
+                                                    <!-- Annuleer knop -->
                                                     <button onclick="showCancelModal({{ $booking->id }})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">Annuleer</button>
                                                 @endif
-                                                {{-- @if(!$booking->is_paid)
-                                                    <form method="POST" action="{{ route('booking.markPaid', $booking->id) }}">
-                                                        @csrf
-                                                        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs">Markeer als betaald</button>
-                                                    </form>
-                                                @endif --}}
                                             </div>
                                         </li>
                                     @endforeach
@@ -191,7 +237,7 @@
                                 <div class="text-gray-500">Geen aankomende lessen.</div>
                             @endif
                         </div>
-                        <!-- Cancel modal -->
+                        <!-- Annuleer modal -->
                         <div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
                             <div class="bg-white rounded-lg p-6 w-full max-w-md">
                                 <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Les annuleren</h3>
@@ -220,7 +266,7 @@
                             }
                         </script>
                     </div>
-                    <!-- Right Column -->
+                    <!-- Rechterkolom -->
                     <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
                         <h3 class="text-lg font-bold mb-4 text-[#0077b6]">Vorige lessen</h3>
                         @if($previousLessons->count())
@@ -247,14 +293,13 @@
 
     @if($needsProfile)
         <script>
-            // Optionally, you can add a simple date mask here for better UX
+            // Optioneel: eenvoudige datum mask voor betere UX
             document.querySelector('form[action="{{ route('user.completeProfile') }}"]').addEventListener('submit', function(e) {
                 var input = document.getElementById('birthdate');
                 if (input && input.value) {
-                    // Validate and normalize to d-m-Y (optional, since backend validates)
+                    // Valideer en normaliseer naar d-m-Y (optioneel, backend valideert ook)
                     var parts = input.value.split('-');
                     if (parts.length === 3) {
-                        // Pad day and month if needed
                         parts[0] = parts[0].padStart(2, '0');
                         parts[1] = parts[1].padStart(2, '0');
                         input.value = parts[0] + '-' + parts[1] + '-' + parts[2];

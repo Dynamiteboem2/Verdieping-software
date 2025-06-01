@@ -4,7 +4,7 @@
         <div class="max-w-6xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-bold mb-8 text-gray-800 dark:text-gray-200">Gebruikersbeheer</h2>
-                {{-- Success message --}}
+                {{-- Succesbericht --}}
                 @if(session('success'))
                     <div 
                         x-data="{ show: true }"
@@ -16,7 +16,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                {{-- Error messages --}}
+                {{-- Foutmeldingen --}}
                 @if($errors->any())
                     <div 
                         x-data="{ show: true }"
@@ -41,13 +41,13 @@
                     </div>
                 @endif
 
-                {{-- Admin: Add new user section --}}
+                {{-- Admin: Nieuwe gebruiker toevoegen --}}
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">Nieuwe gebruiker toevoegen</h3>
                     <form method="POST" action="{{ route('admin.createUser') }}" class="flex flex-col md:flex-row gap-4 items-end">
                         @csrf
                         <div>
-                            <label for="new_email" class="block text-xs font-semibold mb-1">E-mail</label>
+                            <label for="new_email" class="block text-xs font-semibold mb-1">E-mailadres</label>
                             <input type="email" name="email" id="new_email" class="border border-gray-300 rounded px-2 py-1 w-56" required>
                         </div>
                         <div>
@@ -70,7 +70,7 @@
                     <table class="min-w-full bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 rounded shadow">
                         <thead>
                             <tr class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
-                                <th class="py-3 px-4 text-left text-xs font-medium uppercase">Email</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase">E-mailadres</th>
                                 <th class="py-3 px-4 text-left text-xs font-medium uppercase">Rol</th>
                                 <th class="py-3 px-4 text-left text-xs font-medium uppercase">Actie</th>
                             </tr>
@@ -126,7 +126,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4 flex justify-center">
-                        {{-- Only show pagination if $users is a paginator instance --}}
+                        {{-- Alleen paginering tonen als $users een paginator is --}}
                         @if(method_exists($users, 'links'))
                             {{ $users->links('pagination::tailwind') }}
                         @endif

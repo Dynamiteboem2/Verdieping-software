@@ -106,21 +106,29 @@
                 <h2 class="text-lg font-bold mb-4">Personal Information</h2>
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium">Name</label>
-                    <input type="text" name="name" id="name" class="w-full border-gray-300 rounded mt-1 @error('name') border-red-500 @enderror" placeholder="Your Name" value="{{ old('name') }}" required>
+                    <input type="text" name="name" id="name" class="w-full border-gray-300 rounded mt-1 @error('name') border-red-500 @enderror" placeholder="Your Name" value="{{ old('name', auth()->user()->name ?? '') }}" required>
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium">Email</label>
-                    <input type="email" name="email" id="email" class="w-full border-gray-300 rounded mt-1 @error('email') border-red-500 @enderror" placeholder="Your Email" value="{{ old('email') }}" required>
+                    <input type="email" name="email" id="email" class="w-full border-gray-300 rounded mt-1 @error('email') border-red-500 @enderror" placeholder="Your Email" value="{{ old('email', auth()->user()->email ?? '') }}" required>
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-4">
                     <label for="phone_number" class="block text-sm font-medium">Phone Number</label>
-                    <input type="text" name="phone_number" id="phone_number" class="w-full border-gray-300 rounded mt-1 @error('phone_number') border-red-500 @enderror" placeholder="Your Phone Number" value="{{ old('phone_number') }}" required>
+                    <input type="text" name="phone_number" id="phone_number" 
+                        class="w-full border-gray-300 rounded mt-1 @error('phone_number') border-red-500 @enderror" 
+                        placeholder="Your Phone Number" 
+                        value="{{ old('phone_number', auth()->user()->mobile ?? '') }}" 
+                        required
+                        pattern="[0-9]+"
+                        inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    >
                     @error('phone_number')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
